@@ -1,0 +1,101 @@
+<app-header></app-header>
+<div id="dashboardPage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <div class="full-width pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+           
+            <div class="page-body">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <ul class="ongoing-list">
+                                                <li routerLink="/marketplace/marketplace-wallet">Add Money</li>
+                                                <li class="text-purple" routerLink="/marketplace/marketplace-wallet-managecard" >Manage Cards</li>
+                                                <li routerLink="/marketplace/marketplace-wallet-history">History</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="">
+                                               <p class="font-weight-bold">Add Debit/Credit Card</p>
+                                               <form class="mt-3">
+                                                    <div class="form-group">
+                                                        <label>Bank</label>
+                                                        <select id="demo" class="form-control">
+                                                            <option value="v1">Select Bank</option>
+                                                            <option value="v1">ICICI</option>
+                                                            <option value="v1">ICICI</option>
+                                                            <option value="v1">ICICI</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>16 Digit Number</label>
+                                                        <input class="form-control" placeholder="1234 4324 7890" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Name on Card</label>
+                                                        <input class="form-control" placeholder="Lorem Ipsum" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>Expiry</label>
+                                                        <input class="form-control" placeholder="12/1996" >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label>CVV</label>
+                                                        <input class="form-control" placeholder="Enter CVV" >
+                                                    </div>
+                                                    <p>Card information will be encrypted. CVV is never saved</p>
+                                                    <button class="mt-3 btn btn-primary">ADD CARD</button>
+                                               </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="footer">
+<div class="container">
+    Copyright@2020. All Rights reserved
+</div>
+</div>
+<div class="modal fade in align-middle" id="successremove">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <!-- Modal body -->
+        <div class="modal-body text-center">
+          <img src="assets/images/confirm.png" />
+          <h6 class="text-purple mt-3">The card has been removed <br>successfully</h6>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  <div class="modal fade in align-middle" id="removecard">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <h6 class="text-light1 mt-3">Are you sure to remove this card?</h6>
+          <p class="font-14">Other card will be added as primary option automatically</p>
+          <p class="text-primary mt-3 text-right">
+              <span data-dismiss="modal" data-toggle="modal" data-target="#successremove"  class="margin-right-20">Yes</span>
+              <span>No</span>
+          </p>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+     

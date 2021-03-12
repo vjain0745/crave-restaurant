@@ -1,0 +1,165 @@
+<div class="theme-loader" *ngIf="routerChanged">
+    <div class="ball-scale">
+      <div class='contain'>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+      </div>
+    </div>
+  </div>
+
+<app-header></app-header>
+<div id="dashboardPage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <div class="full-width pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+            <div class="row align-items-center">
+
+              <div class="col-sm-12 col-lg-3">
+                <div class="form-group">
+                  <!-- <select class="form-control search-input" (change)="searchCatogory($event)">
+                    <option selected value="">Select All Categories</option>
+                    <option [value]="cat._id" *ngFor="let cat of categories">{{ cat.name | titlecase }}</option>
+                  </select> -->
+
+                  <ng-multiselect-dropdown (onDropDownClose)="searchCatogory()" class="form-control marketplace"
+                    style="border-radius: 100px;" *ngIf="categories.length > 0" [placeholder]="'Select Categories'"
+                    [data]="categories" [(ngModel)]="selectedCategories" [ngModelOptions]="{standalone: true}"
+                    [settings]="dropdownSettings">
+                  </ng-multiselect-dropdown>
+                </div>
+              </div>
+
+              <div class="col-sm-12 col-lg-6">
+                <div class="form-group">
+                  <input type="search" [(ngModel)]="searchProduct" (ngModelChange)="searchProd($event)"
+                    class="form-control search-input" placeholder="Search Product(more than 3 character)">
+                  <img src="assets/images/explore.svg" class="search" />
+                </div>
+              </div>
+              <div class="col-sm-12 col-lg-3">
+                <div class="form-group">
+                  <input type="search" class="form-control search-input" placeholder="Enter Location"
+                    ngx-google-places-autocomplete [options]='{}' #placesRef="ngx-places"
+                    (onAddressChange)="handleAddressChange($event)" [ngModel]="locationSearch"
+                    (change)="locationChange($event)">
+                  <img src="assets/images/location.png" class="search" />
+                </div>
+              </div>
+            </div>
+
+
+            <div class="page-body">
+              <div class="pinkish-bg">
+                <div class="row gutter-sm">
+                  <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                    <div class="offer-banner-list">
+                        <p class="text-left font-weight-bold">New Offers</p>
+                        <ul>
+                        <li *ngFor="let offer of offers" (click)="openOfferedSupplier(offer?.supplier_id[0]?._id,offer)">
+                          <div class="banner-list-box">
+                            <div class="img-part offer-box">
+                              <img style="width: 260px;height: 110px;border-radius: 5px;cursor: pointer;"
+                                class="courner" 
+                                [src]=" offer?.supplier_id[0]?.upload_banner_image[0] == null ? offer?.offer_image == null ?  'assets/images/1.png': environment.baseUrl + offer?.offer_image : environment.baseUrl + offer?.supplier_id[0]?.upload_banner_image[0]"
+                                class="courner" />
+
+                                <div class="supplier-text">
+                                  <span (click)="openOfferedSupplier(offer?.supplier_id[0]?._id,offer)"
+                                    class="pull-left font-weight-bold clickble">{{offer?.supplier_id[0]?.first_name | titlecase}}
+                                    {{offer?.supplier_id[0]?.last_name | titlecase}}</span>
+                                  <span class="pull-right text-primary" (click)="markFavorite(offer?.supplier_id[0])" style="cursor: pointer;">
+                                    <i class="fa" [ngClass]="{ 'fa-heart': offer?.supplier_id[0]?.is_fav == 1, 'fa-heart-o': offer?.supplier_id[0]?.is_fav == 0}"></i>
+                                  </span>
+                                  <div class="clearfix"></div>
+                                  <!-- <p>{{offer?.supplier_id[0]?.location}}</p> -->
+            
+                                  <span *ngIf="offer?.supplier_id[0]?.distance" class="pull-left font-14">Distance:
+                                    {{offer?.supplier_id[0]?.distance / 1000 | number}}kms</span>
+                                  <span class="pull-right star" *ngIf="offer?.supplier_id[0]?.rating">
+                                    <i class="fa" [ngClass]="{ 'fa-star-o' : offer?.supplier_id[0]?.rating < 1, 'fa-star': offer?.supplier_id[0]?.rating >= 1 }"></i>
+                                    <i class="fa" [ngClass]="{ 'fa-star-o' : offer?.supplier_id[0]?.rating < 2, 'fa-star': offer?.supplier_id[0]?.rating >= 2 }"></i>
+                                    <i class="fa" [ngClass]="{ 'fa-star-o' : offer?.supplier_id[0]?.rating < 3, 'fa-star': offer?.supplier_id[0]?.rating >= 3 }"></i>
+                                    <i class="fa" [ngClass]="{ 'fa-star-o' : offer?.supplier_id[0]?.rating < 4, 'fa-star': offer?.supplier_id[0]?.rating >= 4 }"></i>
+                                    <i class="fa" [ngClass]="{ 'fa-star-o' : offer?.supplier_id[0]?.rating < 5, 'fa-star': offer?.supplier_id[0]?.rating >= 5 }"></i>
+                                  </span>
+                                </div>
+
+                              <p class="coupon-code-bor">Code <span>{{offer.title}}</span></p>
+                              <p class="coupon-dis" *ngIf="offer.offer_type == 0">
+                                Discount <span>{{offer.price_discount}}
+                                  SAR</span></p>
+                              <p class="coupon-dis" *ngIf="offer.offer_type == 1">Discount
+                                <span>{{offer.percentage_discount}}%</span></p>
+                              <p class="coupon-dis" *ngIf="offer.offer_type == 2">Discount <span>Buy
+                                  {{offer.multibuy_discount_buy}}, Get {{offer.multibuy_discount_get}}</span></p>
+                              <p class="coup-valid">Valid Till : <span>{{offer.valid_to | date}}</span></p>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="text-left font-weight-bold">Near By Suppliers</p>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12" *ngFor="let sup of suppliers; let i=index">
+                  <div class="supplier-img">
+                    <div class="supply-img">
+                      <img (click)="openSupplierDetails(sup)" class="clickble clickble_loading"
+                        [defaultImage]="'assets/images/822.gif'"
+                        [lazyLoad]="environment.baseUrl + sup.upload_banner_image[0]" />
+                    </div>
+                    <div class="supplier-text">
+                      <span (click)="openSupplierDetails(sup)"
+                        class="pull-left font-weight-bold clickble">{{sup.first_name | titlecase}}
+                        {{sup.last_name | titlecase}}</span>
+                      <span class="pull-right text-primary" (click)="markFavorite(sup)" style="cursor: pointer;">
+                        <i class="fa" [ngClass]="{ 'fa-heart': sup.is_fav == 1, 'fa-heart-o': sup.is_fav == 0}"></i>
+                      </span>
+                      <div class="clearfix"></div>
+                      <!-- <p>{{sup.location}}</p> -->
+
+                      <span *ngIf="sup.distance" class="pull-left font-14">Distance:
+                        {{sup.distance / 1000 | number}}kms</span>
+                      <span class="pull-right star">
+                        <i class="fa" [ngClass]="{ 'fa-star-o' : sup.rating < 1, 'fa-star': sup.rating >= 1 }"></i>
+                        <i class="fa" [ngClass]="{ 'fa-star-o' : sup.rating < 2, 'fa-star': sup.rating >= 2 }"></i>
+                        <i class="fa" [ngClass]="{ 'fa-star-o' : sup.rating < 3, 'fa-star': sup.rating >= 3 }"></i>
+                        <i class="fa" [ngClass]="{ 'fa-star-o' : sup.rating < 4, 'fa-star': sup.rating >= 4 }"></i>
+                        <i class="fa" [ngClass]="{ 'fa-star-o' : sup.rating < 5, 'fa-star': sup.rating >= 5 }"></i>
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+              <div class="row" *ngIf="suppliers.length <= 0">
+                <div class="no-item">
+                  No Supplier Found
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="container">
+        Copyright@2020. All Rights reserved
+      </div>
+    </div>

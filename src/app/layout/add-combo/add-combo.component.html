@@ -1,0 +1,143 @@
+<app-header></app-header>
+<div id="menuPage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <app-left-sidebar></app-left-sidebar>
+    <div class="pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+            <div class="page-body">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <span class="mr-3">
+                    Menu
+                  </span>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 text-right col-lg-6">
+                  <a routerLink="/menu/menu-combo" class="text-primary">
+                    Back
+                  </a>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-3">
+                  <ul class="nav-tab-group" *ngIf="!edit">
+                    <li><a routerLink="/home/add-dish">ADD DISH</a></li>
+                    <li class="active"><a routerLink="/home/add-combo">ADD COMBO</a></li>
+                  </ul>
+                  <div class="card">
+                    <div class="card-body">
+                      <!-----tab----->
+                      <!---slider----->
+                      <div class="row align-items-center">
+                        <div class="col-sm-12 col-lg-8">
+                          <p class="font-weight-bold">Add Combo</p>
+                        </div>
+                        <!-- <div class="col-sm-12 col-lg-4">
+                          <div class="form-group">
+                            <input class="form-control search-input" placeholder="Search" type="search">
+                            <img class="search" src="assets/images/explore.svg">
+                          </div>
+                        </div> -->
+                      </div>
+                      <div class="container text-center my-3">
+                        <div id="recipeCarousel" class="carousel slide slide-box w-100" data-ride="carousel">
+                          <div class="carousel-inner w-100" role="listbox">
+                            <div class="carousel-item row no-gutters active">
+                              <div class="col-2 float-left" *ngFor="let dish of dishes">
+                                <div class="checkbox-fade fade-in-primary">
+                                  <label>
+                                    <input id="terms" type="checkbox" [name]="dish._id"
+                                      (change)="selectDish($event, dish, undefined)">
+                                    <span class="cr">
+                                      <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                    </span>
+                                    <span>
+                                      <img class="img-fluid radius" style="width: 80px;height: 80px;"
+                                        [defaultImage]="'assets/img/food.png'"
+                                        [lazyLoad]="environment.baseUrl + dish.food_image">
+                                      <p class="font-weight-bold">{{dish.food_name | titlecase}}</p>
+                                    </span>
+                                  </label>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <a class="carousel-control-prev" href="#recipeCarousel" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true">
+                              <i class="fa fa-angle-left"></i>
+                            </span>
+                            <span class="sr-only">Previous</span>
+                          </a>
+                          <a class="carousel-control-next" href="#recipeCarousel" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true">
+                              <i class="fa fa-angle-right"></i>
+                            </span>
+                            <span class="sr-only">Next</span>
+                          </a>
+                        </div>
+                      </div>
+                      <!---slider----->
+                      <div class="item-box">
+                        <p class="font-weight-bold">Select Added Dish's Varient</p>
+                        <div class="table-responsive">
+                          <table class="w-100 combo-table">
+                            <tr *ngFor="let dish of selectedDishes">
+                              <td><img style="width: 40px;height: 40px;" [defaultImage]="'assets/img/food.png'"
+                                  [lazyLoad]="environment.baseUrl + dish.food_image" />
+                                &nbsp; {{dish?.food_name | titlecase}}
+                              </td>
+                              <td>
+                                <select class="form-control" [id]="'vari_'+ dish._id" (change)="selectVarient($event, dish)">
+                                  <option value="" disabled selected>Select Varient</option>
+                                  <option [value]="vari?._id" *ngFor="let vari of dish?.varients">
+                                    {{vari?.qty | titlecase}}
+                                  </option>
+                                </select>
+                              </td>
+                              <td>
+                                <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <button class="btn btn-sm" id="minus-btn" (click)="decreaseQty(dish)"><i
+                                        class="fa fa-minus"></i></button>
+                                  </div>
+                                  <input type="text" id="qty_input" class="" value="1" min="1"
+                                    [(ngModel)]="dish.quantity">
+                                  <div class="input-group-prepend">
+                                    <button class="btn btn-sm" id="plus-btn" (click)="increaseQty(dish)"><i
+                                        class="fa fa-plus"></i></button>
+                                  </div>
+                                </div>
+                              </td>
+                              <td>
+                                <span><img src="assets/images/delete.png" (click)="remove(dish)" /></span>
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                        <div class="row" *ngIf="selectedDishes.length <= 0">
+                          <div class="no-item">
+                            No Dish Selected Yet
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="w-25 form-group" style="float: right;">
+                        <button type="button" class="btn w-100 btn-primary" (click)="submit()">Fill Details</button>
+                      </div>
+                      <!---tab------->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="container">
+    Copyright@2020. All Rights reserved
+  </div>
+</div>

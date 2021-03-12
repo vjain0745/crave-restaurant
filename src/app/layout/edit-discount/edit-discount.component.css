@@ -1,0 +1,18 @@
+.img-box{
+	width: 235px;
+	position: relative;
+	margin: 30px auto;
+}
+.img-box img{
+	height: 150px;
+	border: 1px solid #f6f6f6;
+	width: auto;
+	max-width: 100%;
+}
+.img-box .close{
+	position: absolute;
+	color: red;
+	top: -22px;
+    right: 9px;
+	font-size: 20px;
+}

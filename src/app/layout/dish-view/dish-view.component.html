@@ -1,0 +1,190 @@
+<app-header></app-header>
+<div id="menuPage"></div>
+
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <app-left-sidebar></app-left-sidebar>
+    <div class="pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+            <div class="page-body">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <span class="mr-3">
+                    Menu
+                  </span>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 text-right col-lg-6">
+                  <a routerLink="/menu/menu-combo" class="text-primary">
+                    Back
+                  </a>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-3">
+
+                  <div class="card">
+                    <div class="card-body">
+                      <!-----tab----->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <form>
+                            <div class="form-group">
+                              <label>Dish Name</label>
+                              <input type="text" placeholder="Enter Name" [value]="dishDetails?.food_name" class="form-control" readonly/>
+                            </div>
+
+                            <p class="font-weight-bold">Dish Pricing</p>
+                            
+                              <div class="form-group">
+                                <table class="table" style="width: 100%;">
+                                  <thead>
+                                    <th>S.No.</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Tax</th>
+                                    <th>Total</th>
+                                  </thead>
+                                  <tbody *ngFor="let vari of dishDetails?.varient; let i = index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{vari.qty | titlecase}}</td>
+                                    <td>{{vari.price}}</td>
+                                    <td>{{vari.tax}}</td>
+                                    <td>{{vari.total}}</td>
+                                  </tbody>
+                                </table>
+                              </div>
+
+                              <!-- <div class="form-group">
+                                <label>Tax</label>
+                                <input type="text" value="$50" class="form-control" readonly>
+                              </div>
+
+                              <div class="form-group">
+                                <label>Final Price</label>
+                                <input type="text" value="$165" class="form-control" readonly>
+                              </div> -->
+
+                            <div class="form-group">
+                              <label>Cuisine</label>
+                              <input type="text" class="form-control" [value]="dishDetails?.food_cuisine?.name" readonly>
+                            </div>
+                            <div class="form-group">
+                              <label>Category</label>
+                              <input type="text" class="form-control" [value]="dishDetails?.food_category?.name" readonly>
+                            </div>
+                            <div class="form-group">
+                              <label>Sub category</label>
+                              <input type="text" class="form-control" [value]="dishDetails?.food_sub_category?.name" readonly>
+                            </div>
+                           
+
+                          </form>
+                        </div>
+                        <div class="col-md-6">
+                        <p class="font-weight-bold">Add Ons</p>
+                          <div class="extra-ing-flex">
+                            <div class="extra-ing-left">
+                                <!-- <h6>Extra Ingredient</h6> -->
+                                <ul>
+                                    <li *ngFor="let ing of dishDetails?.ingredient" style="font-size: 15px;">
+                                      {{ing.name}} <span style="font-size: 12px;font-weight: 800;color: #aeaeae;">/ {{ing.price}} SAR</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- <div class="extra-ing-right">
+                                <h6>Removable Ingredient</h6>
+                                <ul>
+                                    <li>Removable Ingredient 01</li>
+                                    <li>Removable Ingredient 01</li>
+                                    <li>Removable Ingredient 01</li>
+                                </ul>
+                            </div> -->
+                          </div>
+                          <div class="item-image">
+                          <label>Dish Image</label>
+                            <ul>
+                                <li>
+                                  <img [defaultImage]="'assets/images/supplier.png'" width="65px" height="65px" [lazyLoad]="environment.baseUrl + dishDetails?.food_image"/>
+                                </li>
+                            </ul>
+                          </div>
+                          <div class="checkbox-fade fade-in-primary">
+                            <label>
+                                <input id="cutlery" class="example" type="checkbox"><span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span><span class="text-inverse">Provide free cutlery with order (spoons, napkins, chopsticks, aids etc)</span>
+                            </label>&nbsp;&nbsp;
+                            <label>
+                                <input id="chargeable_cutlery" class="example"  type="checkbox"><span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span><span class="text-inverse">Provide chargeable cutlery</span>
+                            </label>
+                          </div>
+                          <div class="form-group" *ngIf="dishDetails?.chargeable_cutlery">
+                            <label>Cutlery Price</label>
+                            <input type="text" class="form-control" [value]="dishDetails?.cutlery_price" readonly>
+                          </div>
+                          <div class="form-group">
+                            <label>Order Limit</label>
+                            <input type="text" class="form-control" [value]="dishDetails?.max_order_limit" readonly>
+                          </div>
+                          <div class="mt-5 form-group">
+                            <button type="submit" (click)="submit()" class="btn w-100 btn-primary">Update Dish</button>
+                          </div>
+                          <!-- <div class="combo-box">
+                            <p class="font-weight-bold">Combos</p>
+                            <div>
+                                <h6>Combo 1<span>$200</span></h6>
+                                <ul>
+                                    <li>Item Name 01</li>
+                                    <li>Item Name 02</li>
+                                    <li>Item Name 03</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h6>Combo 2<span>$200</span></h6>
+                                <ul>
+                                    <li>Item Name 01</li>
+                                    <li>Item Name 02</li>
+                                    <li>Item Name 03</li>
+                                </ul>
+                            </div>
+                          </div> -->
+                        </div>
+                      </div>
+                      <!---tab------->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="footer">
+  <div class="container">
+    Copyright@2020. All Rights reserved
+  </div>
+</div>

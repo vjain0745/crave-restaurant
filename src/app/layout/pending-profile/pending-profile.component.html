@@ -1,0 +1,118 @@
+<section class="login">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <a routerLink= "/dashboard">
+          <img class="height-60" src="assets/images/logo.png" />
+        </a>
+      </div>
+      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 text-right">
+        <div class="header-icon">
+          <a href="javascript:void(0)" class="m-r-30">
+            <img src="assets/images/notification.png" />
+          </a>
+
+          <!-----dropdown----->
+          <a class="dropdown" style="cursor: pointer;">
+            <span data-toggle="dropdown">
+              <img src="assets/images/setting.png" />
+            </span>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" routerLink="/home/pending-profile">View Profile</a>
+              <a class="dropdown-item" href="javascript:void(0)" routerLink="/home/help">Help</a>
+              <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#contact">Contact</a>
+              <a class="dropdown-item" data-toggle="modal" data-target="#logout">Logout</a>
+            </div>
+          </a>
+          <!-----dropdown----->
+          <!-- <a (click)="logout()">
+                        <img src="assets/images/setting.png" />
+                    </a> -->
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-12 col-sm-12 col-md-12">
+        <h5 class="text-center">Complete your profile to start your bussiness</h5>
+      </div>
+    </div>
+    <div class="row" *ngIf="user?.admin_comment != '' && user?.admin_comment != null && user?.is_profile_created == 0">
+      <div class="col-12 col-sm-12 col-md-12">
+        <p class="help-text">{{user?.admin_comment}}</p>
+      </div>
+    </div>
+    <div class="row" [ngClass]=" { 'mt-5': user?.admin_comment == null || user?.is_profile_created == 1 } ">
+      <div class="offset-md-2 col-12 col-sm-12 col-md-4 full-height">
+        <div class="item slider-box" routerLink="/home/bussiness-detail">
+          <button class="btn btn-light"
+            [ngClass]="{'complete-btn': (user?.restaurant_Details?.country != null)}">{{(user?.restaurant_Details?.country == null || user?.restaurant_Details?.country == undefined) ? 'Pending' : 'Completed' }}</button>
+          <div class="text-center">
+            <img src="assets/images/business_details_icon.png" />
+          </div>
+          <div class="pending-data text-center">
+            <h6>Business Details</h6>
+            <p>Provide your TIN & TAX details</p>
+          </div>
+          <div class="add-detail text-center">
+            <a routerLink="/home/bussiness-detail">Add Details</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-sm-12 col-md-4 full-height">
+        <div class="item slider-box" routerLink="/home/bank-detail">
+          <button class="btn btn-light"
+            [ngClass]="{'complete-btn': (user?.bank_detail?.choose_bank)}">{{(user?.bank_detail?.choose_bank) ?  'Completed': 'Pending'}}</button>
+          <div class="text-center">
+            <img src="assets/images/bank_details_icon.png" />
+          </div>
+          <div class="pending-data text-center">
+            <h6>Bank Details</h6>
+            <p>Provide your Bank details <br>to verify account</p>
+          </div>
+          <div class="add-detail text-center">
+            <a routerLink="/home/bank-detail">Add Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="cursor: pointer;"
+      style="padding-top: 15px;text-align: center!important;cursor: pointer;text-decoration: underline;"
+      (click)="completeNstart()" class="text-primary font-weight-bold text-left">All done, Get started</p>
+  </div>
+</section>
+
+<div class="modal fade in align-middle" id="logout">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h6 class="text-light1 mt-3">Are you sure, you want to logout ?</h6>
+        <!-- <p class="font-14">Other card will be added as primary option automatically</p> -->
+        <p class="text-primary mt-3 text-right" style="cursor: pointer;">
+          <span data-dismiss="modal" data-toggle="modal" (click)="logout()" class="margin-right-20">Yes</span>
+          <span data-dismiss="modal" data-toggle="modal">No</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!------------Modal Contact------------------------>
+<div class="modal fade" id="contact">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6>Contact Us</h6>
+        <button class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="contact-modal">
+          <p>Email: <span>admin@gmail.com</span></p>
+          <p>Mobile: <span>9876543210</span></p>
+          <p>Address: <span>C-142, sector-63, Noida, India</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

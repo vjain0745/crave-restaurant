@@ -1,0 +1,128 @@
+<app-header></app-header>
+<div id="menuPage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <app-left-sidebar></app-left-sidebar>
+    <div class="pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+            <div class="page-body">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <span class="mr-3">
+                    Menu
+                  </span>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 text-right col-lg-6">
+                  <a onclick="return history.back()" style="cursor: pointer;" class="text-primary">
+                    Back
+                  </a>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-3">
+
+                  <div class="card">
+                    <div class="card-body">
+                      <!-----tab----->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <form [formGroup]="addDishForm">
+                            <div class="form-group">
+                              <label>Combo Name</label>
+                              <input type="text" placeholder="Enter combo Name" class="form-control"
+                                formControlName="combo_name" />
+                              <div *ngIf="submitted && f.combo_name.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && f.combo_name.errors.required">Combo name is required.</div>
+                              </div>
+                            </div>
+
+                            <p class="font-weight-bold">Combo Pricing</p>
+                            <div class="item-box">
+
+                              <div class="form-group">
+                                <label>Combo Price</label>
+                                <input type="number" placeholder="Enter Price" class="form-control"
+                                  formControlName="combo_price" (change)="updateFinalPrice($event)">
+                                <div *ngIf="submitted && f.combo_price.errors" class="invalid-feedback">
+                                  <div *ngIf="submitted && f.combo_price.errors.required">Combo price is required.</div>
+                                </div>
+                              </div>
+
+                              <!-- <div class="form-group">
+                                <label>Packaging Charge</label>
+                                <input type="number" placeholder="Enter Price" class="form-control"
+                                  formControlName="packing_charge" (change)="updateFinalPrice($event)">
+                              </div> -->
+
+                              <div class="form-group">
+                                <label>Tax</label>
+                                <input type="number" placeholder="Enter Price" formControlName="tax_price"
+                                  class="form-control" (change)="updateFinalPrice($event)">
+                              </div>
+
+                              <div class="form-group">
+                                <label>Final Price</label>
+                                <input type="number" disabled placeholder="Enter Price" formControlName="final_price"
+                                  class="form-control">
+                              </div>
+
+                              <p>This is a cumulative amount user have to pay
+                              </p>
+                            </div>
+
+                            <div class="form-group">
+                              <label>Order Limit</label>
+                              <input type="number" placeholder="0" class="form-control"
+                                formControlName="max_order_limit">
+                              <div *ngIf="submitted && f.max_order_limit.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && f.max_order_limit.errors.required">Order limit is required.
+                                </div>
+                                <div *ngIf="submitted && f.max_order_limit.errors.min">Order limit should be atleast 1.
+                                </div>
+                              </div>
+                            </div>
+
+
+                          </form>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="item-box">
+                            <p class="font-weight-bold">Added Dishes In The Combo</p>
+                            <div class="table-responsive">
+                              <table class="w-100 combo-table">
+                                <tr *ngFor="let dish of selectedDishes">
+                                  <td style="position: relative;">
+                                    <img style="width: 80px;height: 80px;" [defaultImage]="'assets/img/food.png'"
+                                      [lazyLoad]="environment.baseUrl + dish.food_image">
+                                    &nbsp;{{dish.food_name | titlecase}} [{{'x'+dish.quantity}}] <br/>
+                                    <p class="varient">{{dish.selectedVarient.qty | titlecase}}</p>
+                                  </td>
+                                  <!-- <td>
+                                    <span><img src="assets/images/delete.png" /></span>
+                                  </td> -->
+                                </tr>
+                              </table>
+                            </div>
+                          </div>
+                          <div class="text-right mt-3">
+                            <button (click)="submit()" class=" w-100 btn btn-primary">{{edit ? 'UPDATE' : 'SAVE'}}</button>
+                          </div>
+                        </div>
+                      </div>
+                      <!---tab------->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="container">
+    Copyright@2020. All Rights reserved
+  </div>
+</div>

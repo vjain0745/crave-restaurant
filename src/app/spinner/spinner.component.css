@@ -1,0 +1,21 @@
+
+.ball-scale {
+	left: 50%;
+	top: 50%;
+	position: absolute;
+    height: 50px;
+    background-color: white;
+	z-index: 999999;
+
+	width: 75px;
+	margin: -25px 0 0 -37.5px;
+}
+
+#newdiv {
+	height: 100%;
+	width: 100%;
+	background-color: white;
+	position: fixed;
+	z-index: 999999;
+	top: 0;
+}

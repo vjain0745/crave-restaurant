@@ -1,0 +1,310 @@
+<div class="theme-loader" *ngIf="routerChanged">
+    <div class="ball-scale">
+      <div class='contain'>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+      </div>
+    </div>
+  </div>
+
+    <app-header></app-header>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <div class="full-width pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+
+            <div class="page-body">
+              <div class="card">
+                <div class="card-body">
+
+                  <div class="row">
+                    <div class="col-sm-12 col-md-3">
+                      <div class="img-part">
+                        <img style="max-height: 170px;" [defaultImage]="'assets/images/822.gif'"
+                          [lazyLoad]="environment.baseUrl + supplier.upload_banner_image[0]" class="courner w-100" />
+                      </div>
+                    </div>
+                    <div class="col-sm-12 col-md-9 ">
+                      <div class="product-text table-responsive">
+                        <table class="w-100 global-table">
+                          <tr>
+                            <td class="font-weight-bold">
+                              <span style="font-size: 20px;">{{supplier.first_name | titlecase}}
+                                {{supplier.last_name | titlecase}} &nbsp; </span>
+                              <img src="assets/images/check-mark.png" class="courner" />
+                            </td>
+                            <td class="text-right">
+                              <!-- <img src="assets/images/heart.png" class="courner"/> -->
+                              <div class=" text-primary" (click)="markFavorite(supplier)" style="cursor: pointer;">
+                                <i style="font-size: 20px;" class="fa"
+                                  [ngClass]="{ 'fa-heart': supplier.is_fav == 1, 'fa-heart-o': supplier.is_fav == 0}"></i>
+                              </div>
+                              <div *ngIf="ifOffer" class="offer-bor"><span>On Offer</span></div>
+                            </td>
+                          </tr>
+                          <!-- <tr>
+                            <td colspan="2">
+                              <span class="star">
+                                <i class="fa" style="font-size: 20px;"
+                                  [ngClass]="{ 'fa-star-o' : supplier.rating < 1, 'fa-star': supplier.rating >= 1 }"></i>
+                                <i class="fa" style="font-size: 20px;"
+                                  [ngClass]="{ 'fa-star-o' : supplier.rating < 2, 'fa-star': supplier.rating >= 2 }"></i>
+                                <i class="fa" style="font-size: 20px;"
+                                  [ngClass]="{ 'fa-star-o' : supplier.rating < 3, 'fa-star': supplier.rating >= 3 }"></i>
+                                <i class="fa" style="font-size: 20px;"
+                                  [ngClass]="{ 'fa-star-o' : supplier.rating < 4, 'fa-star': supplier.rating >= 4 }"></i>
+                                <i class="fa" style="font-size: 20px;"
+                                  [ngClass]="{ 'fa-star-o' : supplier.rating < 5, 'fa-star': supplier.rating >= 5 }"></i>
+                              </span>
+                            </td>
+                          </tr>                                        -->
+                          <tr>
+                            <p class="coupon-code-bor">Code <span>{{offer?.title}}</span></p>
+                          </tr>
+                          <tr>
+                            <p class="coupon-dis" *ngIf="offer?.offer_type == 0">
+                              Discount <span>{{offer?.price_discount}}
+                                SAR</span></p>
+                            <p class="coupon-dis" *ngIf="offer?.offer_type == 1">Discount
+                              <span>{{offer?.percentage_discount}}%</span></p>
+                            <p class="coupon-dis" *ngIf="offer?.offer_type == 2">Discount <span>Buy
+                                {{offer?.multibuy_discount_buy}}, Get {{offer?.multibuy_discount_get}}</span></p>
+                          </tr>
+                          <tr>
+                            <p class="coup-valid">Valid Till : <span>{{offer?.valid_to | date}}</span></p>
+                          </tr>
+                          <tr>
+                            <td>
+                              <!-- <p class="mt-3"><span style="font-weight: 600;color: #8f8f8f;"> Address</span><br>
+                                {{supplier.location}}
+                                <br>
+                                {{supplier.address}}
+                              </p> -->
+                            </td>
+                            <!-- <td class="text-right v-align-bottom" *ngIf="supplier.distance">
+                              <p>Distance {{supplier.distance / 1000 | number}}kms</p>
+                            </td> -->
+                          </tr>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-body">
+                  <div class="row align-items-center">
+                    <div class="col-sm-12 col-lg-3">
+                      <h6 class="font-weight-bold">Products</h6>
+                    </div>
+                    <div class="offset-md-6 col-sm-12 col-lg-3">
+                      <div class="form-group">
+                        <input type="search" [(ngModel)]="searchProduct" (ngModelChange)="search($event)"
+                          class="form-control search-input" placeholder="Search Product">
+                        <img src="assets/images/explore.svg" class="search" />
+                      </div>
+                    </div>
+                    <!-- <div class="col-sm-12 col-lg-3">
+                              <div class="form-group">
+                                <select id="demo"  class="form-control search-input">
+                                  <option value="v1">Combobox</option>
+                                  <option value="v1">XYZ</option>
+                                  <option value="v1">XYZ</option>
+                                  <option value="v1">XYZ</option>
+                                  <option value="v1">XYZ</option>
+                                </select>
+                              </div>
+                            </div> -->
+                  </div>
+                  <div class="row">
+
+                    <div class="col-md-6 full-height" *ngFor="let prod of products">
+                      <div class="product-area">
+                        <div class="row">
+                          <div class="col-sm-12 col-md-3 full-height">
+                            <div class="img-part" style="text-align: center;" data-toggle="modal" data-target="#add"
+                              (click)="selectProduct(prod)">
+                              <img style="height: 120px; width: auto !important; " 
+                                 [defaultImage]="'assets/images/822.gif'"
+                                [lazyLoad]="baseurl + prod?.product_images[0]"
+                                class="courner v-align-center w-100" />
+                                
+                            </div>
+                          </div>
+                          <div class="col-sm-12 col-md-9 full-height">
+                            <div class="product-text table-responsive">
+                              <table class="w-100 global-table">
+                                <tr>
+                                  <td class="text-dark">{{prod.product_name | titlecase}}</td>
+                                  <td class="text-purple text-right">
+                                    <span class= "text-success" *ngIf="prod?.offer != undefined && prod?.offer_type == 0">SAR
+                                      {{prod.product_price - prod.offer | number : '1.2-2'}} <span
+                                        *ngIf="prod?.product_unit != ''">/
+                                        {{prod.product_unit}}</span></span>&nbsp;
+                                    <span class="text-success"
+                                      *ngIf="prod?.offer != undefined && prod?.offer_type == 1">SAR
+                                      {{ (prod.product_price) - ((prod.product_price * prod.offer)/100) | number : '1.2-2' }} <span
+                                        *ngIf="prod.product_unit != ''">/
+                                        {{prod.product_unit}}</span></span>&nbsp;
+                                    <span class="text-success" *ngIf="prod?.offer != undefined && prod?.offer_type == 2">
+                                      [Buy {{prod?.offer?.split(',')[0]}}, Get {{prod.offer.split(',')[1]}} Free]
+                                    </span>&nbsp;
+                                    <!-- test: {{prod?.product_unit == '""' ? 'h' : 'g'}} -->
+                                    <span
+                                      [ngClass]="{'wrong-price': (prod?.offer_type == 0 || prod?.offer_type == 1)}">SAR
+                                      {{prod.product_price | number : '1.2-2'}} <span *ngIf='prod?.product_unit != "" '>/
+                                        {{prod.product_unit }}</span>
+                                      </span>
+                                  </td>
+                                </tr>
+                                <tr>  
+                                  <td>
+                                    <p class="para">{{prod.product_description}}</p>
+                                  </td>
+                                  <td class="text-right"><button data-toggle="modal" data-target="#add"
+                                      (click)="selectProduct(prod)" class="add">Add</button></td>
+                                </tr>
+                                <tr *ngIf="prod?.offer != undefined">
+                                  <td>
+                                    <p class="para">Code</p>
+                                  </td>
+                                  <td class="text-right">
+                                    <p class="coupon-code-bor"><span>{{prod.title}}</span></p>
+                                  </td>
+                                </tr>
+                                <tr *ngIf="prod?.offer != undefined">
+                                  <td>
+                                    <p class="para">Discount</p>
+                                  </td>
+                                  <td class="text-right">
+                                    <p class="coupon-dis">
+                                      <!-- <span class="text-success"
+                                      *ngIf="prod.offer != undefined && prod.offer_type == 0">SAR
+                                      {{prod.offer | number}}</span> -->
+
+                                      <span class="text-success"
+                                        *ngIf="prod?.offer != undefined && prod.offer_type == 0">SAR
+                                        {{prod?.offer | number : '1.2-2'}} <span *ngIf="prod?.product_unit != ''">/
+                                          {{prod.product_unit}}</span></span>&nbsp;
+                                      <span class="text-success"
+                                        *ngIf="prod.offer != undefined && prod.offer_type == 1">
+                                        {{ prod.offer }}% <span *ngIf="prod.product_unit != ''">/
+                                          {{prod.product_unit}}</span></span>&nbsp;
+                                      <span class="text-success"
+                                        *ngIf="prod.offer != undefined && prod.offer_type == 2">
+                                        [Buy {{prod.offer.split(',')[0]}}, Get {{prod.offer.split(',')[1]}} Free]
+                                      </span>
+
+                                    </p>
+                                  </td>
+                                </tr>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="products.length <= 0">
+                    <div class="no-item">
+                      No Product Found
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="container">
+        Copyright@2020. All Rights reserved
+      </div>
+    </div>
+
+
+    <div class="modal fade in align-middle" id="add">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <!-- Modal body -->
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> 
+          </div>
+          <div class="modal-body text-center">
+            <span class="pull-left font-weight-bold">{{selectedProduct?.product_name | titlecase}}</span>
+            <span class="pull-right text-purple font-weight-bold">
+              <span  class='text-success' *ngIf="selectedProduct?.offer != undefined && selectedProduct?.offer_type == 0">SAR
+                {{selectedProduct?.product_price - selectedProduct?.offer | number : '1.2-2'}} <span
+                  *ngIf="selectedProduct?.product_unit != ''">/
+                  {{selectedProduct?.product_unit}}</span></span>&nbsp;
+              <span class='text-success' *ngIf="selectedProduct?.offer != undefined && selectedProduct?.offer_type == 1">SAR
+                {{ (selectedProduct?.product_price) - ((selectedProduct?.product_price * selectedProduct.offer)/100) | number : '1.2-2' }}
+                <span *ngIf="selectedProduct?.product_unit != ''">/
+                  {{selectedProduct?.product_unit}}</span></span>&nbsp;
+              <span class='text-success' *ngIf="selectedProduct?.offer != undefined && selectedProduct?.offer_type == 2"> [Buy
+                {{selectedProduct?.offer.split(',')[0]}}, Get {{selectedProduct?.offer.split(',')[1]}} Free] <span
+                  *ngIf="selectedProduct?.product_unit != ''">/
+                  {{selectedProduct?.product_unit}}</span></span>&nbsp;
+
+              <span
+                [ngClass]="{'wrong-price': (selectedProduct?.offer_type == 0 || selectedProduct?.offer_type == 1)}">SAR
+                {{selectedProduct?.product_price | number : '1.2-2'}} <span *ngIf="selectedProduct?.product_unit != ''">/
+                  {{selectedProduct?.product_unit}}</span></span>
+            </span>
+
+            <span class="text-success offer"
+              *ngIf="selectedProduct?.offer != undefined && selectedProduct?.offer_type != 2">{{selectedProduct?.offer}}{{selectedProduct?.offer_type == '1' ? '%' : ' SAR'}}
+              Off <span *ngIf="selectedProduct?.product_unit != ''">/
+                {{selectedProduct?.product_unit}}</span></span>
+
+            <div class="clearfix"></div>
+            <div class="add-text">
+              <img   [defaultImage]="baseurl + selectedProduct?.product_images[0]"
+                [lazyLoad]=" baseurl +selectedProduct?.product_images[0] " style=" height:200px; width:auto !important " class="courner v-align-center w-100" />
+              <!-- <p>{{selectedProduct?.product_category | titlecase}}</p>
+                    <p>{{selectedProduct?.product_sub_category | titlecase}}</p> -->
+              <p>{{selectedProduct?.product_description}}</p>
+              <p>{{selectedProduct?.product_specification}}</p>
+         
+              <p style="position: relative" class="pull-left">
+             
+                <input type="number" id="number" min="1" class="form-control" style="width: 55%;" placeholder="Quantity"
+                  [(ngModel)]="prod_model" />
+                <span class="unit">{{selectedProduct?.product_unit}}</span>
+                <span class="unit" *ngIf="selectedProduct?.product_unit == ''">Piece(s)</span>
+
+              </p>
+              <p style="font-size: 15px;" class="pull-right">Total:
+                <span class="amount" *ngIf="selectedProduct?.offer != undefined && selectedProduct?.offer_type == 0">
+                  SAR {{ (selectedProduct?.product_price - selectedProduct?.offer) * prod_model | number : '1.2-2'}}
+                </span>
+                <span class="amount" *ngIf="selectedProduct?.offer != undefined && selectedProduct?.offer_type == 1">
+                  SAR
+                  {{ (selectedProduct?.product_price - ((selectedProduct?.product_price * selectedProduct?.offer) / 100 )) * prod_model | number : '1.2-2'}}
+                </span>
+                <span class="amount" *ngIf="selectedProduct?.offer == undefined || selectedProduct?.offer_type == 2">
+                  SAR {{selectedProduct?.product_price * prod_model | number : '1.2-2'}}
+                </span>
+              </p>
+
+              <button class="btn btn-primary w-100 mt-3" (click)="addProdToCart(selectedProduct)">ADD TO CART</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+</div>

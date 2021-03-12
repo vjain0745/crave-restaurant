@@ -1,0 +1,153 @@
+<app-header></app-header>
+<div id="dashboardPage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <div class="full-width pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+
+            <div class="page-body">
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-3">
+                          <ul class="ongoing-list">
+                            <li routerLink="/marketplace/marketplace-ongoing-order">Ongoing Orders</li>
+                            <li routerLink="/marketplace/marketplace-cancelled">Cancelled</li>
+                            <li routerLink="/marketplace/marketplace-completed" class="text-purple">Completed</li>
+                          </ul>
+                        </div>
+                        <div class="col-md-9">
+                          <div class="ongoing-details">
+                            <div *ngFor="let product of productList?.products" class="product-area">
+                              <div class="row">
+                                <div class="col-sm-12 col-md-3 full-height">
+                                  <div class="img-part" data-toggle="modal" data-target="#add">
+                                    <img
+                                      [src]="product?.product_id?.product_images[0] == null ? 'assets/images/product-1.png' : baseUrl + product?.product_id?.product_images[0]"
+                                      class="courner v-align-center w-100" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-12 col-md-9 full-height">
+
+                                  <div class="product-text table-responsive">
+                                    <table class="w-100 global-table">
+                                      <tr>
+                                        <td class="text-dark font-weight-bold">{{product?.product_id?.product_name}}
+                                        </td>
+                                        <td class="text-purple font-weight-bold text-right">
+                                          {{product?.unit_price * product?.quantity | number : '1.2-2' }}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <p class="para">{{product?.product_id?.product_description}}</p>
+                                          <p class="para">Quantity :{{product?.quantity}}</p>
+                                          <p class="para">Per Unit Price :{{product?.unit_price |number : '1.2-2' }}</p>
+                                        </td>
+                                        <!-- <td class="text-right">
+                                                          <button class="add-light text-center">
+                                                              <span class="fa fa-minus text-dark"></span>
+                                                              <span style="margin:0px 7px;">1</span>
+                                                              <span class="fa fa-plus"></span>
+                                                          </button>  
+                                            </td> -->
+                                      </tr>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 full-height">
+                  <div class="card">
+                    <div class="card-body">
+                      <p class="font-weight-bold">Bill Details</p>
+                      <div class="table-responsive bill-table">
+                        <table class="w-100">
+                          <tr>
+                            <td>Item Total</td> 
+                            <td class="text-right text-success">SAR {{productList?.final_amount | number : '1.2-2'}}</td>
+                          </tr>
+                          <tr>
+                            <td>Discount</td>
+                            <td class="text-right text-success">SAR {{productList?.final_discount |number : '1.2-2'}}</td>
+                          </tr>
+                          <tr class="border-bottom">
+                            <td>Delivery</td>
+                            <td class="text-right text-success">SAR {{productList?.delivery_charge |number : '1.2-2'}}</td>
+                          </tr>
+                          <tr>
+                            <td class="font-weight-bold">Total</td>
+                            <td class="text-right text-success">SAR {{productList?.final_amount - productList?.final_discount  | number : '1.2-2'}}</td>
+                          </tr>
+
+                        </table>
+                        <p class="text-primary">Savings of SAR {{productList?.final_discount |number : '1.2-2'}} on this order</p>
+
+
+                        <div class="">
+                          <span class="margin-right-10 font-weight-bold">Status</span>
+                          <span><button class="btn btn-green">Delivered on 16Feb 2020</button></span>
+
+                          <button data-toggle="modal" data-target="#rate" class="btn btn-primary w-100 mt-5">RATE AND
+                            REVIEW</button>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="container">
+        Copyright@2020. All Rights reserved
+      </div>
+    </div>
+
+    <div class="modal fade align-middle" id="rate">
+      <div class="modal-dialog modal-dialog-centered modal-md" data-dismiss="modal">
+        <div class="modal-content">
+          <!-- Modal body -->
+          <div class="modal-body">
+
+            <form>
+              <p class="font-weight-bold">Share Your Experience</p>
+              <div class="rating text-center">
+                <img class="img-fluid" src="assets/images/star-big.png">
+                <img class="img-fluid" src="assets/images/star-big.png">
+                <img class="img-fluid" src="assets/images/star-big.png">
+                <img class="img-fluid" src="assets/images/star-big.png">
+                <img class="img-fluid" src="assets/images/star-white.png">
+              </div>
+
+              <div class="form-group">
+                <label class="dark-label">Anything that can be improved?</label>
+                <textarea class="form-control textarea" placeholder="Your feedback (Optional)" rows="5"></textarea>
+              </div>
+
+              <div class="form-group mt-3">
+                <button routerLink="/marketplace/marketplace-completed-after-review" class="btn btn-primary w-100">
+                  SUBMIT
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>

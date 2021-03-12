@@ -1,0 +1,402 @@
+<app-header></app-header>
+<div id="menuPage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <app-left-sidebar></app-left-sidebar>
+    <div class="pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+            <div class="page-body">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <span class="mr-3">
+                    Menu
+                  </span>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 text-right col-lg-6">
+                  <a (click)="goBack()" class="text-primary">
+                    Back
+                  </a>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-3">
+                  <ul class="nav-tab-group" *ngIf="!edit">
+                    <li *ngIf="!edit" class="active"><a routerLink="/home/add-dish">ADD DISH</a></li>
+                    <li *ngIf="edit" class="active"><a routerLink="/home/add-dish">EDIT DISH</a></li>
+
+                    <li *ngIf="!edit" ><a routerLink="/home/add-combo">ADD COMBO</a></li>
+                    <li *ngIf="edit" ><a routerLink="/home/add-combo">EDIT COMBO</a></li>
+
+                  </ul>
+                  <div class="card">
+                    <div class="card-body">
+                      <!-----tab----->
+                      
+                      <form [formGroup]="addDishForm" (ngSubmit)="submit()">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <p *ngIf="edit" class="font-weight-bold">EDIT Dish</p>
+                            <p *ngIf="!edit" class="font-weight-bold">ADD Dish</p>
+
+                            <div class="form-group">
+                              <label>Dish Name</label>
+                              <input type="text" placeholder="Enter Name" class="form-control"
+                                formControlName="food_name" [ngClass]="{ 'is-invalid': submitted && f.food_name.errors}">
+                              <div *ngIf="submitted && f.food_name.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && f.food_name.errors.required">Dish name is required.</div>
+                              </div>
+                            </div>
+                            <!-- <div class="custom-control custom-radio" style="padding-right: 0.5rem;">
+                              <ul>
+                                <li>
+                                  <div class="custom-control custom-radio">
+                                    <input type="radio" value="1" class="custom-control-input" selected id="demo1"
+                                      name="food_type" formControlName="food_type">
+                                    <label class="custom-control-label" for="demo1">Veg</label>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="custom-control custom-radio">
+                                    <input type="radio" value="2" class="custom-control-input" id="demo2"
+                                      name="food_type" formControlName="food_type">
+                                    <label class="custom-control-label" for="demo2">Non Veg</label>
+                                  </div>
+                                </li>
+                                <li>
+                                  <div class="custom-control custom-radio">
+                                    <input type="radio" value="3" class="custom-control-input" id="demo3"
+                                      name="food_type" formControlName="food_type">
+                                    <label class="custom-control-label" for="demo3">Egg</label>
+                                  </div>
+                                </li>
+                              </ul>
+                            </div> -->
+
+                            <div class="form-group">
+                              <label>Cuisine</label>
+                              <select class="form-control" (change)="selectCuisine($event, undefined)"
+                                formControlName="food_cuisine" [ngClass]="{ 'is-invalid': submitted && f.food_cuisine.errors}">
+                                <option value="" disabled selected>Select Cuisine</option>
+                                <option *ngFor="let cui of cuisines" [value]="cui._id">
+                                  {{cui.name | titlecase}}
+                                </option>
+                              </select>
+                              <div *ngIf="submitted && f.food_cuisine.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && f.food_cuisine.errors.required">Dish cuisine is required.</div>
+                              </div>
+                            </div>
+
+                            <p class="mt-3 font-weight-bold">Dish Pricing
+                              <span class=" underline pull-right"><a href="javascript:void(0);" class="text-primary" (click)="addMore()">Add More</a></span>
+                            </p>
+
+
+                            <div class="item-box" *ngFor="let vari of varient; let i = index">
+                              <div class="row">
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <label>Price</label>
+                                    <input min='0' type="number" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"  placeholder="Enter price" [(ngModel)]="vari.price"
+                                      [ngModelOptions]="{standalone: true}" class="form-control"
+                                      (ngModelChange)="varientTotal(vari)">
+                                  </div>
+                                </div>
+                                <div class="col-md-6">
+                                  <div class="form-group">
+                                    <label>Size</label>
+                                    <select class="form-control" [(ngModel)]="vari.qty"
+                                      [ngModelOptions]="{standalone: true}">
+                                      <option value="" disabled selected>Select Size</option>
+                                      <option *ngFor="let measr of foodMeasures" [value]="measr">
+                                        {{measr | titlecase}}
+                                      </option>
+                                    </select>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <!-- <div class="form-group">
+                                <label>Packing Charges</label>
+                                <input type="number" placeholder="Enter price" [(ngModel)]="vari.packing_charge"
+                                  [ngModelOptions]="{standalone: true}" class="form-control"
+                                  (ngModelChange)="varientTotal(vari)">
+                              </div> -->
+
+                              <div class="form-group">
+                                <label>Tax</label>
+                                <input min='0' type="number" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"  placeholder="Enter price" [(ngModel)]="vari.tax"
+                                  (ngModelChange)="varientTotal(vari)" [ngModelOptions]="{standalone: true}"
+                                  class="form-control">
+                              </div>
+
+                              <div class="form-group">
+                                <label>Final Price</label>
+                                <input type="number" placeholder="0" [(ngModel)]="vari.total"
+                                  [ngModelOptions]="{standalone: true}" disabled class="form-control">
+                              </div>
+                              <p>This is a cumulative amount user have to pay
+                                <span *ngIf="i > 0" class="text-primary underline pull-right"
+                                  (click)="removeVarient(i)">Remove</span>
+                              </p>
+                              <p>Price Should Be Same As Dine In Prices</p>
+                            </div>
+
+                            <div mt-3 class="form-group">
+                              <label>Dish Category</label>
+                              <select class="form-control" (change)="selectCategory($event, undefined)"
+                                formControlName="food_category" [ngClass]="{ 'is-invalid': submitted && f.food_category.errors}">
+                                <option value="" disabled selected>Select Category</option>
+                                <option *ngFor="let cat of categories" [value]="cat._id">
+                                  {{cat.name | titlecase}}
+                                </option>
+                              </select>
+                              <div *ngIf="submitted && f.food_category.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && f.food_category.errors.required">Dish category is required.
+                                </div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>Dish Sub Category</label>
+                              <select class="form-control" formControlName="food_sub_category" [ngClass]="{ 'is-invalid': submitted && f.food_sub_category.errors}">
+                                <option value="" disabled selected>Select Sub Category</option>
+                                <option *ngFor="let cat of subCategories" [value]="cat._id">
+                                  {{cat.name | titlecase}}
+                                </option>
+                              </select>
+                              <div *ngIf="submitted && f.food_sub_category.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && f.food_sub_category.errors.required">Dish sub category is
+                                  required.</div>
+                              </div>
+                            </div>
+
+                            <!-- <p>Quantity should be same as provided to Dine In customer</p> -->
+
+                          </div>
+                          <div class="col-md-6">
+
+                            
+
+                            <div class="form-group">
+                              <p class="font-weight-bold">Add Ons</p>
+                              <button data-toggle="modal" type="button" data-target="#select-ingredient"
+                                class="text-primary underline">Select Extra Ingredient</button>
+                              <!-- <span data-toggle="modal" data-target="#remove-ingredient"
+                                class="text-primary underline pull-right">Select Removable Ingredient</span> -->
+                            </div>
+                            <select class="form-group" *ngIf= "selectedIngredient.length > 0">
+                              <option class="form-control" *ngFor="let ingerd of selectedIngredient" value="0">
+                                <div *ngIf= "selectedIngredient.length " >
+                                  <p class="font-weight-bold"  >{{ingerd?.ingredient_name}} : SAR {{ingerd?.price}}</p>
+                              </div>
+                              </option>
+                            </select>
+                          
+
+                            <div class="form-group">
+                              <label>Upload Image</label>
+                              <div class="form-control file showName">
+                                <input type="file" (change)="fileInput($event)" class="form-control" />
+                                <span class="text">Upload</span>
+                                <span class="text-dark" style="font-weight: 400;"
+                                  *ngIf="foodImage && foodImage.length > 0">{{foodImage[0].name}}
+                                  <i class="ti-image fs-12 ml-1 remove" style="padding-right: 2px;"></i>
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="from-group">
+                                  <label> Total Calories </label>
+                                    <br>
+                                  <input min='0' type="number" [ngClass]="{ 'is-invalid': submitted && f.Calories.errors}" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"  formControlName="Calories" placeholder="Enter Total Calories" class="form-control"/>
+                           
+                              <div *ngIf="submitted && f.Calories.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && f.Calories.errors.required">Calories is
+                                  required.</div>
+                            </div>  </div>
+
+                            <div class="form-group">
+                              <label>Cutlery Charges</label>
+                              <input min='0' type="number" [ngClass]="{ 'is-invalid': submitted && f.cutlery_price.errors}" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"  placeholder="SAR 0" class="form-control"
+                                formControlName="cutlery_price">
+                                <div *ngIf="submitted && f.cutlery_price.errors" class="invalid-feedback">
+                                  <div *ngIf="submitted && f.cutlery_price.errors.required">cutlery price is
+                                    required.</div>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <label>Order Limit</label>
+                              <input type="number" min="0" placeholder="0" class="form-control"
+                                formControlName="max_order_limit" [ngClass]="{ 'is-invalid': submitted && f.max_order_limit.errors}">
+                              <div *ngIf="submitted && f.max_order_limit.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && f.max_order_limit.errors.required">Order limit is required.
+                                </div>
+                                <div *ngIf="submitted && f.max_order_limit.errors.min">Order limit should be atleast 1.
+                                </div>
+                              </div>
+                            </div>
+                            <!-- <div class="form-group">
+                              
+                              <textarea rows="3" class="form-control full-border" placeholder="Dish Description" formControlName="food_description"></textarea>
+                              <div *ngIf="submitted && f.food_description.errors" class="invalid-feedback">
+                                <div *ngIf="submitted && f.food_description.errors.required">Dish description is
+                                  required.</div>
+                              </div>
+                            </div> -->
+                            <div class="mt-5 form-group">
+                              <button type="submit" *ngIf="!edit" class="btn w-100 btn-primary">SAVE & SUBMIT FOR APPROVAL</button>
+                              <button type="submit"  *ngIf="edit"class="btn w-100 btn-primary">Update Dish</button>
+                            </div>
+
+                          </div>
+                        </div>
+                      </form>
+
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="container">
+          Copyright@2020. All Rights reserved
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade align-middle" id="select-ingredient" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered modal-md">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <button type="button" class="btn-close" (click)="saveIngredient()" aria-label="Close"></button>
+          </div>
+
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <p class="font-weight-bold">Select Extra Ingredient</p>
+        <div class="row">
+          <div class="col-md-7">
+            <div class="form-group checkbox-fade fade-in-primary" *ngFor="let ing of ingredients">
+              <label>
+                <input id="terms" type="checkbox" [name]="ing?._id" (change)="selectIngredient($event, ing)">
+                <span class="cr">
+                  <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                </span>
+                <span class="text-inverse">{{ing?.ingredient_name | titlecase}}</span>
+                <span *ngIf="ing?.checked">
+                  <input type="text" [(ngModel)]="ing.price" [ngModelOptions]="{standalone: true}" class="custom-field"
+                    placeholder="(in SAR)">
+                </span>
+              </label>
+            </div>
+            <div>
+
+                <label *ngIf = "ingredients.length == 0">
+                  <p> Sorry No Ingredients Found </p>
+                </label>
+    
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group mt-3">
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" (click)="saveIngredient()">Close</button>
+              <button type="button" class="btn btn-primary" (click)="saveIngredient()">Save changes</button>
+            </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal fade align-middle" id="remove-ingredient">
+      <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+          <div class="modal-body">
+
+            <form>
+              <p class="font-weight-bold">Select Removable Ingredient</p>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group checkbox-fade fade-in-primary">
+                    <label>
+                      <input id="terms" type="checkbox">
+                      <span class="cr">
+                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                      </span>
+                      <span class="text-inverse">Extra Ingredien 1</span>
+                    </label>
+                  </div>
+                  <div class="form-group checkbox-fade fade-in-primary">
+                    <label>
+                      <input id="terms" type="checkbox">
+                      <span class="cr">
+                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                      </span>
+                      <span class="text-inverse">Extra Ingredien 2</span>
+                    </label>
+                  </div>
+                  <div class="form-group checkbox-fade fade-in-primary">
+                    <label>
+                      <input id="terms" type="checkbox">
+                      <span class="cr">
+                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                      </span>
+                      <span class="text-inverse">Extra Ingredien 3</span>
+
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group checkbox-fade fade-in-primary">
+                    <label>
+                      <input id="terms" type="checkbox">
+                      <span class="cr">
+                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                      </span>
+                      <span class="text-inverse">Extra Ingredien 4</span>
+                    </label>
+                  </div>
+                  <div class="form-group checkbox-fade fade-in-primary">
+                    <label>
+                      <input id="terms" type="checkbox">
+                      <span class="cr">
+                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                      </span>
+                      <span class="text-inverse">Extra Ingredien 5</span>
+                    </label>
+                  </div>
+                  <div class="form-group checkbox-fade fade-in-primary">
+                    <label>
+                      <input id="terms" type="checkbox">
+                      <span class="cr">
+                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                      </span>
+                      <span class="text-inverse">Extra Ingredien 6</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="form-group mt-3">
+                <button data-dismiss="modal" class="btn btn-primary w-100">
+                  SUBMIT
+                </button>
+              </div>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div> -->

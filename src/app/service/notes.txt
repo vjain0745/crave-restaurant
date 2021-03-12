@@ -1,0 +1,21 @@
+user order status:
+
+place order -> generate a new order against a user & restaurant
+
+Initial status : 0
+
+0 : i : pending
+1 : r : accepted(enter the time of prepraing) (send live order to near by drivers)
+2 : d : driver accept the order/driver assigned
+1 : d : driver reject the order
+3 : r : ready: (send live order to near by drivers)
+4 : d : order picked
+5 : r : delayed
+6 : r : Rejected(by restaurant)
+7 : d : Order delivered
+8 : u : order cancelled by user 
+
+9 : d : onroute to restaurant
+10 : d : arrived at restaurant
+11 : d : onroute to delivery location
+12 : d : arrived at delivery location

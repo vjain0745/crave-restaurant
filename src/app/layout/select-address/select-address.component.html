@@ -1,0 +1,85 @@
+<app-header></app-header>
+<div id="addressPage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <app-left-sidebar></app-left-sidebar>
+    <div class="pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+            <div class="page-body">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <span class="mr-3">
+                    Manage Address
+                  </span>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 text-right col-lg-6">
+                  <a routerLink="/home/add-address" class="text-primary">
+                    Add New Address
+                  </a>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="product-list-block" *ngIf="addressList.length > 0">
+                        <div class="row">
+                          <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12" *ngFor="let address of addressList">
+                            <div class="saved-address">
+                              <label>
+                                <input type="radio" name="address" [value]="address._id" id="address"/>
+                                <span>
+                                  <div class="name-flex">
+                                    <h6>{{address.name | titlecase}}<span>{{address.address_type | titlecase}}</span>
+                                    </h6>
+                                    <div class="name-btn">
+                                      <a (click)="selectEditAddress(address)"><i class="fa fa-pencil"></i></a>
+                                      <a href="javascript:void(0);" data-toggle="modal" data-target="#delete-modal"
+                                        (click)="selectAddress(address)"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                  </div>
+                                  <div class="text-success">{{address.mobile_number}}</div>
+                                  <p>{{address.address_title}}</p>
+                                </span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="w-100 text-center">
+                          <button class="btn btn-primary" (click)="setDefault()">Save As Delivery Address</button>
+                        </div>
+                      </div>
+                      <div class="no-item" *ngIf="addressList.length <= 0">
+                        No Address Saved Yet.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="container">
+          Copyright@2020. All Rights reserved
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="delete-modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h6 class="text-center font-14 mt-3">Are you sure, you want to delete this address ?</h6>
+        <div class="w-100 text-center mt-3">
+          <button class="btn btn-success btn-md" data-dismiss="modal" (click)="deleteAddress()">Yes</button>
+          <button class="btn btn-primary btn-md" data-dismiss="modal">No</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

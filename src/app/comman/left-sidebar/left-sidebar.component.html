@@ -1,0 +1,163 @@
+<nav class="pcoded-navbar">
+  <div class="sidebar_toggle"><a href="javascript:void(0)"><i class="icon-close icons"></i></a></div>
+  <div class="pcoded-inner-navbar main-menu">
+    <div class="">
+      <div class="main-menu-header">
+        <!-- <img class=" img-radius" [src]="user.restaurant_Details.rest_image[0] ? environment.baseUrl+user.restaurant_Details.rest_image[0] : 'assets/images/avatar-1.jpg' "/> -->
+        <img alt="Theme-Logo" class="img-side" height="60px" width="65px" [src]="user.restaurant_Details.rest_image[0] ? environment.baseUrl+user.restaurant_Details.rest_image[0] : 'assets/images/avatar-1.jpg'">
+        <div class="user-details">
+          <span class="text-priamry">{{user.restaurant_name | titlecase}}</span>
+          <span id="more-details" class="text-gray">Restaurant
+          <i class="ti-angle-down"></i>
+          </span>
+        </div>
+      </div>
+      <div class="main-menu-content">
+        <ul>
+          <li class="more-details">
+            <a routerLink="/home/pending-profile"><i class="ti-user"></i>View Profile</a>
+            <!-- <a routerLink="#!"><i class="ti-settings"></i>Settings</a> -->
+            <a style="cursor: pointer;" (click)="logout()"><i class="ti-power-off"></i>Logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- <div class="pcoded-search">
+      <span class="searchbar-toggle"> </span>
+      <div class="pcoded-search-box ">
+        <input type="text" placeholder="Search" />
+        <span class="search-icon"><i class="ti-search" aria-hidden="true"></i></span>
+      </div>
+    </div> -->
+    <!-- <div class="pcoded-navigatio-lavel h6">Navigation</div> -->
+    <ul class="pcoded-item pcoded-left-item left-menu">
+      <!--<li id="dashboardNav">
+        <a routerLink="layout/dashboard">
+          <span class="pcoded-micon"><i class="ti-home"></i></span>
+          <span class="pcoded-mtext">Dashboard</span>
+          <span class="pcoded-mcaret"></span>
+        </a>
+         <ul class="pcoded-submenu">
+          <li class="active">
+            <a routerLink="layout/">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext" data-i18n="nav.dash.default">Default</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          <li class="">
+            <a routerLink="layout/ecommerce">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext" data-i18n="nav.dash.ecommerce">Ecommerce</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          <li class="">
+            <a routerLink="layout/crm">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext" data-i18n="nav.dash.crm">CRM</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          <li class=" ">
+            <a routerLink="layout/analytics">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext" data-i18n="nav.dash.analytics">Analytics</span>
+              <span class="pcoded-badge label label-info ">NEW</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+          <li class=" ">
+            <a routerLink="layout/project">
+              <span class="pcoded-micon"><i class="ti-angle-right"></i></span>
+              <span class="pcoded-mtext" data-i18n="nav.dash.project">Project</span>
+              <span class="pcoded-mcaret"></span>
+            </a>
+          </li>
+        </ul>
+      </li> -->
+      <!-- <li id="dashboardNav">
+        <a routerLink="layout/profile">
+          <span class="pcoded-micon"><i class="ti-user"></i></span>
+          <span class="pcoded-img">
+            <img src="assets/images/dashboard.png"/>
+          </span>
+          <span class="pcoded-mtext">Dashboard</span>
+          <span class="pcoded-mcaret"></span>
+        </a>
+      </li> -->
+      <li id="dashboardNav">
+        <a routerLink="/dashboard">
+          <span class="pcoded-img">
+            <img src="assets/images/dashboard.png"/>
+          </span>
+          <span class="pcoded-mtext">Dashboard</span>
+        </a>
+      </li>
+      <li id="ordersNav">
+        <a routerLink="/orders/live-orders">
+          <span class="pcoded-img">
+            <img src="assets/images/Orders.png"/>
+          </span>
+          <span class="pcoded-mtext">Orders</span>
+        </a>
+      </li>
+      <li id="menuNav">
+        <a routerLink="/menu/menu-combo">
+          <span class="pcoded-img">
+            <img src="assets/images/menu.png"/>
+          </span>
+          <span class="pcoded-mtext">Menu</span>
+        </a>
+      </li>
+      <li id="addressNav">
+        <a routerLink="/home/manage-address">
+          <span class="pcoded-img">
+            <img src="assets/images/branch_2.png"/>
+          </span>
+          <span class="pcoded-mtext">Manage Address</span>
+        </a>
+      </li>
+      <li id="mealplansNav">
+        <a routerLink="/underdevelopment">
+          <span class="pcoded-img">
+            <img src="assets/images/branch_1.png"/>
+          </span>
+          <span class="pcoded-mtext">Branches</span>
+        </a>
+      </li>
+      <li id="discountsNav">
+        <a routerLink="/home/discounts">
+          <span class="pcoded-img">
+            <img src="assets/images/Discounts.png"/>
+          </span>
+          <span class="pcoded-mtext">Offer's/Discounts</span>
+        </a>
+      </li>
+      <li id="paymentsNav">
+        <a routerLink="/home/payments">
+          <span class="pcoded-img">
+            <img src="assets/images/Payments.png"/>
+          </span>
+          <span class="pcoded-mtext">Payments</span>
+        </a>
+      </li>
+      <li id="revenueNav">
+        <a routerLink="/home/revenue">
+          <span class="pcoded-img">
+            <img src="assets/images/Revenue.png"/>
+          </span>
+          <span class="pcoded-mtext">Revenue</span>
+        </a>
+      </li>
+      <li id="profileNav">
+        <a routerLink="/home/profile">
+          <span class="pcoded-img">
+            <img src="assets/images/Profile.png"/>
+          </span>
+          <span class="pcoded-mtext">Profile</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>

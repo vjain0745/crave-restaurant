@@ -1,0 +1,196 @@
+<app-header></app-header>
+<div id="addressPage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <app-left-sidebar></app-left-sidebar>
+    <div class="pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+            <div class="page-body">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <span class="mr-3">
+                    Add Delivery Address
+                  </span>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 text-right col-lg-6">
+                  <a routerLink="/home/manage-address" class="text-primary">
+                    Back
+                  </a>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-3">
+                  <form class="card" [formGroup]="addressForm" (ngSubmit)="submit()">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                          <div class="checkout-form">
+                            <h6>Personal Details</h6>
+                            <div class="row">
+                              <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" placeholder="Name" formControlName="name"
+                                  [ngClass]="{ 'is-invalid': submitted && f.name.errors}"/>
+                                  <div class="invalid-feedback" *ngIf="submitted && f.name.errors">
+                                    <div *ngIf="submitted && f.name.errors.required">Name is required</div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                  <input min='0' type="number"  onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" 
+                                   class="form-control" placeholder="Mobile Number" formControlName="mobile"
+                                  [ngClass]="{ 'is-invalid': submitted && f.mobile.errors}"/>
+                                  <div class="invalid-feedback" *ngIf="submitted && f.mobile.errors">
+                                    <div *ngIf="submitted && f.mobile.errors.required">Mobile is required</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <h6>Delivery Details</h6>
+                            <div class="row">
+                              <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" placeholder="Flat/Building Number/House No." 
+                                  formControlName="house_no" [ngClass]="{ 'is-invalid': submitted && f.house_no.errors}"/>
+                                  <div class="invalid-feedback" *ngIf="submitted && f.house_no.errors">
+                                    <div *ngIf="submitted && f.house_no.errors.required">House no is required</div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                  <!-- <input type="text" class="form-control" placeholder="Flat/Building Number"/> -->
+                                  <input class="form-control location"
+                                    type="text" placeholder="Location" ngx-google-places-autocomplete [options]='{}'
+                                    #placesRef="ngx-places" (onAddressChange)="handleAddressChange($event)" formControlName="location_str"
+                                    [ngClass]="{ 'is-invalid': submitted && f.location_str.errors}" />
+                                  <div class="invalid-feedback" *ngIf="submitted && f.location_str.errors">
+                                    <div *ngIf="submitted && f.location_str.errors.required">Address is required</div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" placeholder="Street/Locality" formControlName="locality"
+                                  [ngClass]="{ 'is-invalid': submitted && f.locality.errors}"/>
+                                  <div class="invalid-feedback" *ngIf="submitted && f.locality.errors">
+                                    <div *ngIf="submitted && f.locality.errors.required">Locality is required</div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" placeholder="City" formControlName="city" [ngClass]="{ 'is-invalid': submitted && f.city.errors}"/>
+                                  <div class="invalid-feedback" *ngIf="submitted && f.city.errors">
+                                    <div *ngIf="submitted && f.city.errors.required">City is required</div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                  <input type="text" class="form-control" placeholder="District" formControlName="district"
+                                  [ngClass]="{ 'is-invalid': submitted && f.district.errors}" />
+                                  <div class="invalid-feedback" *ngIf="submitted && f.district.errors">
+                                    <div *ngIf="submitted && f.district.errors.required">District is required</div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12">
+                                <div class="form-group">
+                                  <input min='0' type="number"  onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" 
+                                  class="form-control" placeholder="Postal code" formControlName="pin_code"
+                                  [ngClass]="{ 'is-invalid': submitted && f.pin_code.errors}" />
+                                  <div class="invalid-feedback" *ngIf="submitted && f.pin_code.errors">
+                                    <div *ngIf="submitted && f.pin_code.errors.required">Postal code is required</div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <select class="form-control">
+                                            <option>Country</option>
+                                            <option>India</option>
+                                            <option>China</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <select class="form-control">
+                                            <option>State</option>
+                                            <option>Uttar Pradesh</option>
+                                            <option>Punjab</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xl-12 col-lg-12 col-md-6 col-sm-6 col-12">
+                                    <div class="form-group">
+                                        <select class="form-control">
+                                            <option>City</option>
+                                            <option>Delhi</option>
+                                            <option>Mumbai</option>
+                                        </select>
+                                    </div>
+                                </div> -->
+                            </div>
+                            <div class="row">
+                              <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                <div class="chek-form">
+                                  <div class="custome-checkbox">
+                                    <input class="form-check-input" type="checkbox" id="address" name="checkbox" hidden>
+                                    <label class="form-check-label label_info" for="address"><span>Set as default
+                                        delivery address</span></label>
+                                  </div>
+                                </div>
+                                <div class="add-tags create-account">
+                                  <ul>
+                                    <!-- <li>Add Tags</li> -->
+                                    <li><label><input type="radio" hidden value="Home" formControlName="address_type"/><span>Home</span></label></li>
+                                    <li><label><input type="radio" hidden value="Office" formControlName="address_type"/><span>Office</span></label>
+                                    </li>
+                                    <li><label><input type="radio" hidden value="Factory" formControlName="address_type"/><span>Factory</span></label>
+                                    </li>
+                                    <li><label><input type="radio" hidden value="WareHouse" formControlName="address_type"/><span>WareHouse</span></label>
+                                    <li><label><input type="radio" hidden value="Others" formControlName="address_type"/><span>Others</span></label>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                          <agm-map style="height: 100%;" [latitude]="lat" [longitude]="long" [zoom]="12"
+                            [disableDefaultUI]="false" [zoomControl]="false" (mapClick)="mapClicked($event)">
+                            <agm-marker [latitude]="lat" [longitude]="long" [markerDraggable]="true"
+                              (dragEnd)="getMarkerLocation($event)">
+
+                              <agm-info-window>
+                                <strong>{{location_str}}</strong>
+                              </agm-info-window>
+
+                            </agm-marker>
+                          </agm-map>
+                        </div>
+                      </div>
+                      <div class="w-100 text-center" style="margin-top: 20px;">
+                        <button type="submit" class="btn btn-primary">Save Address</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <div class="container">
+          Copyright@2020. All Rights reserved
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

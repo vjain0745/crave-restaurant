@@ -1,0 +1,142 @@
+<app-header></app-header>
+<div id="dashboardPage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <div class="full-width pcoded-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+            <div class="page-body">
+                <div class="card">
+                    <div class="card-body">
+                        <form class="gateway-form">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h6 class="font-weight-bold">Amount to be Paid</h6>
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <p class="font-weight-bold text-purple">SAR {{order.total_pay | number}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio line-height-50">
+                                            <input type="radio" class="custom-control-input" id="demo3" name="n1" value="0" [(ngModel)]="payment_mode">
+                                            <label class="custom-control-label" for="demo3">Cash On Delivery</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio line-height-50">
+                                            <input type="radio" class="custom-control-input" id="demo1" name="n1" value="1" [(ngModel)]="payment_mode">
+                                            <label class="custom-control-label" for="demo1">Debit/Credit Card</label>
+                                        </div>
+                                        <div class="card-area">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="card-img">
+                                                        <img class="img-fluid" src="assets/images/card1.png">
+                                                        <p class="text-purple">Remove Card</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="card-details">
+                                                        <form>
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control" placeholder="Card Number">
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <div class="d-line d-flex">
+                                                                    <span>
+                                                                        <label>Expiry Month</label>
+                                                                        <input type="text" class="form-control" placeholder="Month">  
+                                                                    </span>
+                                                                    <span>
+                                                                        <label>Expiry Year</label>
+                                                                        <input type="text" class="form-control" placeholder="Year">  
+                                                                    </span>
+                                                                    <span>
+                                                                        <label>CVV Code</label>
+                                                                        <input type="text" class="form-control" placeholder="XXX">  
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="text" class="form-control" placeholder="Name on the Card">
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                    <p class="text-purple">Add Card +</p>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="card-img">
+                                                        <img class="img-fluid" src="assets/images/card2.png">
+                                                        <p class="text-purple">Remove Card</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio">
+                                            <input type="radio" class="custom-control-input" id="demo2" name="n1" value="2" [(ngModel)]="payment_mode">
+                                            <label class="custom-control-label" for="demo2">Net Banking</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control custom-input margin-left-20" id="demo">
+                                                <option value="v1">Choose Your Bank</option>
+                                                <option value="v1">ICICI</option>
+                                                <option value="v1">ICICI</option>
+                                                <option value="v1">ICICI</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio line-height-50">
+                                            <input type="radio" class="custom-control-input" id="demo3" name="n1" value="3" [(ngModel)]="payment_mode">
+                                            <label class="custom-control-label" for="demo3">Wallet</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="custom-control custom-radio line-height-50">
+                                            <input type="radio" class="custom-control-input" id="demo4" name="n1" value="4" [(ngModel)]="payment_mode">
+                                            <label class="custom-control-label" for="demo4">Other Payment Methods</label>
+                                        </div>
+                                        <img class="img-fluid" src="assets/images/pay.png">
+                                    </div>
+
+                                    <div class="form-group mt-5">
+                                        <button (click)="payNow()"  class="btn btn-primary w-100">CONFIRM & PAY</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="footer">
+            <div class="container">
+              Copyright@2020. All Rights reserved
+            </div>
+          </div>
+          <div class="modal fade in align-middle" id="done">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <!-- Modal body -->
+                <div class="modal-body text-center">
+                  <img src="assets/images/confirm.png" />
+                  <h6 class="text-purple mt-3">Your Order has been placed<br> successfully!</h6>
+                  <button (click)="goHome()"  class="btn btn-primary w-100">Go To Home</button>
+                </div>
+                
+              </div>
+            </div>
+          </div>

@@ -1,0 +1,82 @@
+<app-header></app-header>
+<div id="branchPage"></div>
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <app-left-sidebar></app-left-sidebar>
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <div class="page-body">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                    <span class="font-weight-bold">
+                                        Branches
+                                    </span>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 text-right col-lg-6">
+                                  <button type="button" class="btn btn-primary">ADD</button>
+                              </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-3">
+                                    <ul class="nav-tab-group">
+                                        <li class="active"><a routerLink="/home/branches-sub-admin">SUB ADMIN</a></li>
+                                        <li><a routerLink="/home/branches-branch">BRANCH</a></li>
+                                    </ul>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <!-----tab----->
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <th>Order Id</th>
+                                                        <th>Added On</th>
+                                                        <th>Name</th>
+                                                        <th>Number</th>
+                                                        <th>Branch Name</th>
+                                                        <th>Email</th>
+                                                        <th class="wpx-80 text-center">Action</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>#12345</td>
+                                                            <td>20/02/2020</td>
+                                                            <td>Lorem ipsum</td>
+                                                            <td>8796543276</td>
+                                                            <td>#80986</td>
+                                                            <td>demo@gmail.com</td>
+                                                            <td class="text-center">
+                                                              <a class="mr-2" data-toggle="modal" data-target="#delete-modal">
+                                                                <img src="assets/images/show.png" />
+                                                            </a>
+                                                            <a class="ml-2 mr-2" data-toggle="modal" data-target="#edit-modal">
+                                                                <img src="assets/images/edit.png" />
+                                                            </a>
+                                                            
+                                                                <label class="checkbox toggle">
+                                                                    <input type="checkbox" checked /><em></em>
+                                                                </label>
+
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <!---tab------->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="container">
+        Copyright@2020. All Rights reserved
+    </div>
+</div>

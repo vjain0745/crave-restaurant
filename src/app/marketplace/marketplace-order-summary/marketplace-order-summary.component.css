@@ -1,0 +1,42 @@
+.prod_unit{
+    position: absolute;
+    bottom: -17px;
+    right: 0px;
+    font-size: 15px;
+    font-weight: 400;
+    color: #11a531;
+}
+.no-item{
+    text-align: center;
+    border: 1px dashed #aeaeae;
+    border-radius: 5px;
+    width: 100%;
+    font-size: 12px;
+    color: #aeaeae;
+    margin: 20px;
+    padding: 10px;
+    margin-bottom: 0px;
+    cursor: pointer;
+}
+.selectedTime{
+    position: absolute;
+    top: 60px;
+    right: 25px;
+    background: #ed5c5c4a;
+    border-radius: 5px;
+    padding: 7px;
+    color: #d50505;
+}
+.img-coupon{
+    margin-top: 1rem;
+    margin-right: 0px;
+    padding-left: 30px;
+}
+.coupon-body{
+    padding-left: 0;
+    
+}
+.coupon-text{
+    color: #e42b4f;
+    font-weight: bold;
+}

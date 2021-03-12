@@ -1,0 +1,209 @@
+<div class="theme-loader" *ngIf="routerChanged">
+  <div class="ball-scale">
+    <div class='contain'>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+    </div>
+  </div>
+</div>
+<app-header></app-header>
+<div id="discountsPage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <app-left-sidebar></app-left-sidebar>
+    <div class="pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+            <div class="page-body">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <h6 class="font-weight-bold">
+                    Offer & Discounts
+                  </h6>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 text-right col-lg-6">
+                  <button type="button" class="btn btn-primary" routerLink="/home/add-discount">ADD
+                    OFFER/DISCOUNT</button>
+                </div>
+                <div class="col-md-8">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label>From</label>
+                        <input type="date" [(ngModel)]="fromFilter" placeholder="mm/dd/yyyy"
+                          (change)="filterDate()" class="form-control" />
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-md-6 col-12">
+                      <div class="form-group">
+                        <label>To</label>
+                        <input type="date" [(ngModel)]="toFilter" placeholder="mm/dd/yyyy" (change)="filterDate()"
+                          class="form-control" />
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                    <mat-form-field>
+                        <mat-label>Search</mat-label>
+                        <input matInput (keyup)="applyFilter($event)" placeholder="Enter text" #input>
+                      </mat-form-field>
+                  <!-- <div id="live-table_filter" class="form-group"><label>Search:</label>
+                    <input type="search" placeholder="" class="form-control">
+                  </div> -->
+                </div>
+
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-3">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="table-responsive">
+                        <!-- <table class="table">
+                          <thead>
+                            <th>Offer Id</th>
+                            <th>On Offer</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Status</th>
+                            <th class="wpx-80 text-center">Action</th>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let offer of offerList">
+                              <td>#{{offer._id | slice: offer._id.length-10:
+                                offer._id.length}}</td>
+                              <td>{{offer.title}}</td>
+                              <td>{{offer.valid_from | date}}</td>
+                              <td>{{offer.valid_to | date}}</td>
+                              <td>
+                                <span [ngClass]="(offer.is_approved)?'text-success':'text-danger'">{{ offer.is_approved
+                                  ? 'Approved' :
+                                  'Pending' }}</span>
+                              </td>
+                              <td class="text-center">
+                                <a class="ml-2 mr-2" [routerLink]="['/home/edit-discount',offer?._id]">
+                                  <img src="assets/images/edit.png" />
+                                </a>
+                                <a class="mr-2" data-toggle="modal" (click)="delete(offer._id)"
+                                  data-target="#delete-modal">
+                                  <img src="assets/images/delete.png" />
+                                </a>
+                                <label class="checkbox toggle">
+                                  <input type="checkbox" [checked]="offer.is_active"
+                                    (click)="updateActive(offer._id)" /><em></em>
+                                </label>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table> -->
+                          <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 w-100">
+                            <ng-container matColumnDef="Sr.no">
+                              <th mat-header-cell *matHeaderCellDef>Sr.No.</th>
+                              <td mat-cell *matCellDef="let element; let i = index"> {{ (paginator1.pageIndex * paginator1.pageSize) + (i + 1) }} </td>
+                            </ng-container>
+        
+                            <ng-container matColumnDef="Offer Id">
+                              <th mat-header-cell *matHeaderCellDef>Offer Id</th>
+                              <td mat-cell *matCellDef="let element"> {{ element._id | slice: element._id.length-10:
+                                element._id.length }}
+                              </td>
+                            </ng-container>
+        
+                            <ng-container matColumnDef="On Offer">
+                              <th mat-header-cell *matHeaderCellDef> On Offer </th>
+                              <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+                            </ng-container>
+        
+                            <ng-container matColumnDef="From">
+                              <th mat-header-cell *matHeaderCellDef> From </th>
+                              <td mat-cell *matCellDef="let element"> {{element.valid_from | date}} </td>
+                            </ng-container>
+        
+                            <ng-container matColumnDef="To">
+                              <th mat-header-cell *matHeaderCellDef> To </th>
+                              <td mat-cell *matCellDef="let element"> {{element.valid_to | date}} </td>
+                            </ng-container>
+        
+                            <ng-container matColumnDef="Status">
+                              <th mat-header-cell *matHeaderCellDef>Status</th>
+                              <td mat-cell *matCellDef="let element"> <span [ngClass]="(element?.is_approved)?'text-success':'text-danger'">{{ element?.is_approved
+                                ? 'Approved' :
+                                'Pending' }}</span> </td>
+                            </ng-container>
+        
+                            <ng-container matColumnDef="Action">
+                              <th mat-header-cell *matHeaderCellDef> Action </th>
+                              <td mat-cell *matCellDef="let element">
+                                <span class="d-flex">
+                                  <a class="ml-2 mr-2" [routerLink]="['/home/edit-discount',element?._id]">
+                                    <img src="assets/images/edit.png" />
+                                  </a>
+                                  <a class="mr-2" data-toggle="modal" (click)="delete(element._id)"
+                                  data-target="#delete-modal">
+                                  <img src="assets/images/delete.png" />
+                                </a>
+                                <label class="checkbox toggle">
+                                  <input type="checkbox" [checked]="element.is_active"
+                                    (click)="updateActive(element._id)" /><em></em>
+                                </label>   
+                                </span>
+                              </td>
+                            </ng-container>
+        
+                            <tr mat-header-row *matHeaderRowDef="userColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: userColumns;"></tr>
+                          </table>
+
+                      </div>
+                      
+                      <mat-paginator #paginator1 [length]="length" [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="pageSize" [pageIndex]="0"></mat-paginator>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="container">
+    Copyright@2020. All Rights reserved
+  </div>
+</div>
+
+<div class="modal fade" id="delete-modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <i class="fa fa-trash text-danger" style="font-size: 22px;"></i>
+        <p>Do you want to delete this Offer?</p>
+        <div class="w-100 text-center">
+          <button class="btn btn-success" modal-target="#deleted" data-toggle="modal" (click)="deleteoffer()"
+            data-dismiss="modal">Yes</button>
+          <button class="btn btn-danger" data-dismiss="modal">No</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="deleted">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <i class="fa fa-check text-success" style="font-size: 22px;"></i>
+        <p>Deleted Successfully..!</p>
+      </div>
+    </div>
+  </div>
+</div>

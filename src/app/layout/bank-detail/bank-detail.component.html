@@ -1,0 +1,163 @@
+<section class="login">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+        <a href="javascript:void(0)">
+          <img class="height-60" src="assets/images/logo.png" />
+        </a>
+      </div>
+      <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 text-right">
+        <div class="header-icon">
+          <a href="javascript:void(0)" class="m-r-30">
+            <img src="assets/images/notification.png" />
+          </a>
+
+          <!-----dropdown----->
+          <a class="dropdown" style="cursor: pointer;">
+            <span data-toggle="dropdown">
+              <img src="assets/images/setting.png" />
+            </span>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" routerLink="/home/pending-profile">View Profile</a>
+              <a class="dropdown-item" href="javascript:void(0)" routerLink="/home/help">Help</a>
+              <a class="dropdown-item" href="javascript:void(0)" data-toggle="modal" data-target="#contact">Contact</a>
+              <a class="dropdown-item" data-toggle="modal" data-target="#logout">Logout</a>
+            </div>
+          </a>
+          <!-----dropdown----->
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5">
+      <div class="col-md-6">
+        <form class="form-area" [formGroup]="bankDetails" (ngSubmit)="bankSubmit()">
+          <h6>Fill your Bank details to complete your profile</h6>
+          <div class="form-group mt-3">
+            <label>Bank Name</label>
+            <select class="form-control" id="demo" formControlName="bank_name" [ngClass]="{ 'is-invalid': bankSubmitted && b.bank_name.errors}">
+              <option value="">Select Bank</option>
+              <option value="The National Commercial Bank">The National Commercial Bank</option>
+              <option value="The Saudi British Bank">The Saudi British Bank</option>
+              <option value="Saudi Investment Bank">Saudi Investment Bank</option>
+              <option value="Alinma Bank">Alinma Bank</option>
+              <option value="Banque Saudi Fransi">Banque Saudi Fransi</option>
+              <option value="Riyad Bank">Riyad Bank</option>
+              <option value="Samba Financial Group (Samba)">Samba Financial Group (Samba)</option>
+              <option value="Alawwal Bank">Alawwal Bank</option>
+              <option value="Al Rajhi Bank">Al Rajhi Bank</option>
+              <option value="Arab National Bank">Arab National Bank</option>
+              <option value="Bank AlBilad">Bank AlBilad</option>
+              <option value="Bank AlJazira">Bank AlJazira</option>
+              <option value="Gulf International Bank Saudi Aribia (GIB-SA)">Gulf International Bank Saudi Aribia
+                (GIB-SA)</option>
+            </select>
+            <div *ngIf="bankSubmitted && b.bank_name.errors" class="invalid-feedback">
+              <div *ngIf="bankSubmitted && b.bank_name.errors.required">Bank name is required.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Branch Name</label>
+            <input class="form-control" (keypress)="utils.restrictSpaceAtFirst($event)" formControlName="branch_name"
+              type="text" placeholder="Enter Branch Name" [ngClass]="{ 'is-invalid': bankSubmitted && b.branch_name.errors}" />
+            <div *ngIf="bankSubmitted && b.branch_name.errors" class="invalid-feedback">
+              <div *ngIf="bankSubmitted && b.branch_name.errors.required">Branch name is required.</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Account Number</label>
+            <input class="form-control" formControlName="acc_no" minlength="8" type="text"
+              placeholder="Enter Account Number" [ngClass]="{ 'is-invalid': bankSubmitted && b.acc_no.errors}"
+              onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57">
+            <div *ngIf="bankSubmitted && b.acc_no.errors" class="invalid-feedback">
+              <div *ngIf="bankSubmitted && b.acc_no.errors.required">Account number is required.</div>
+              <div *ngIf="bankSubmitted && b.acc_no.errors.minlength">Account number must be at least 8 characters.
+              </div>
+              <div *ngIf="bankSubmitted && b.acc_no.errors.maxlength">Account number must be at smaller than 20
+                characters.</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Accountant Phone Number</label>
+            <input class="form-control" formControlName="accountant_num" type="text" placeholder="Enter Phone No." [ngClass]="{ 'is-invalid': bankSubmitted && b.accountant_num.errors}"
+              onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57">
+            <div *ngIf="bankSubmitted && b.accountant_num.errors" class="invalid-feedback">
+              <div *ngIf="bankSubmitted && b.accountant_num.errors.required">Accountant phone number is required.</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>IBAN Code</label>
+            <input class="form-control" (keypress)="utils.restrictSpaceAtFirst($event)" formControlName="iban"
+              type="text" placeholder="Enter IBAN Code" [ngClass]="{ 'is-invalid': bankSubmitted && b.iban.errors}" />
+            <div *ngIf="bankSubmitted && b.iban.errors" class="invalid-feedback">
+              <div *ngIf="bankSubmitted && b.iban.errors.required">IBAN code is required.</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Bank IBAN Letter</label>
+            <div class="form-control file showName">
+              <input accept="image/*" type="file" (change)="uploadBankLetter($event)" class="form-control" />
+              <span class="text" style="cursor: pointer;">Upload</span>
+              <span *ngIf="bankLetter.length > 0 && imagestatus == 1" class="text-dark">{{bankLetter[0].name}}<i (click)="removeimage()"
+                  class="ti-close fs-10 ml-1 remove"></i></span>
+              <a [href]="baseurl + bankLetter[0]" target="_blank"><span *ngIf="bankLetter.length > 0 && ( imagestatus == 0|| imagestatus == undefined) " class="text-dark">{{bankLetter.length + ' file[s]'}}</span>
+                </a>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Bank Account Name</label>
+            <input class="form-control" (keypress)="utils.restrictSpaceAtFirst($event)" formControlName="acc_name" [ngClass]="{ 'is-invalid': bankSubmitted && b.acc_name.errors}"
+              type="text" placeholder="Enter Account Holder Name">
+            <div *ngIf="bankSubmitted && b.acc_name.errors" class="invalid-feedback">
+              <div *ngIf="bankSubmitted && b.acc_name.errors.required">Account Holder Name is required.</div>
+              <div *ngIf="bankSubmitted && b.acc_name.errors.maxlength">Account Holder Name should not be greater than
+                35 characters.</div>
+            </div>
+          </div>
+
+          <div class="form-group mt-3">
+            <button type="submit" class="w-100 btn btn-primary">Save</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+<div class="modal fade in align-middle" id="logout">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body">
+        <h6 class="text-light1 mt-3">Are you sure, you want to logout ?</h6>
+        <!-- <p class="font-14">Other card will be added as primary option automatically</p> -->
+        <p class="text-primary mt-3 text-right" style="cursor: pointer;">
+          <span data-dismiss="modal" data-toggle="modal" (click)="logout()" class="margin-right-20">Yes</span>
+          <span data-dismiss="modal" data-toggle="modal">No</span>
+        </p>
+      </div>
+
+    </div>
+  </div>
+</div>  
+  
+  <!------------Modal Contact------------------------>
+  <div class="modal fade" id="contact">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6>Contact Us</h6>
+          <button class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="contact-modal">
+            <p>Email: <span>admin@gmail.com</span></p>
+            <p>Mobile: <span>9876543210</span></p>
+            <p>Address: <span>C-142, sector-63, Noida, India</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

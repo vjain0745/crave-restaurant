@@ -1,0 +1,142 @@
+<app-header></app-header>
+<div id="menuPage"></div>
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <app-left-sidebar></app-left-sidebar>
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <div class="page-body">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                    <span class="mr-3">
+                                        <!-- <label class="checkbox toggle">
+                                            <input type="checkbox" checked /><em></em>
+                                        </label> -->
+                                        Menu
+                                    </span>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 text-right col-lg-6">
+                                    <button routerLink="/home/add-dish" class="btn btn-primary btn-sm">ADD DISH/COMBO</button>
+                                  </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-3">
+                                    <ul class="nav-tab-group">
+                                        <li><a routerLink="/menu/menu-combo">Menu</a></li>
+                                        <li class="active"><a routerLink="/menu/menu-inventory">Inventory</a></li>
+                                        <li><a routerLink="/menu/menu-my-listings">My Listings</a></li>
+                                    </ul>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <!-----tab----->
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <th>Ingredient</th>
+                                                        <th>Restock Reminder</th>
+                                                        <th>Add</th>
+                                                        <th>Stock</th>
+                                                        <th class="wpx-80 text-center">Serve with Food</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let prod of products">
+                                                            <td>
+                                                                <img style="border: 1px solid #aeaeae;padding: 3px;" [defaultImage]="'assets/images/supplier.png'" width="40px" height="40px" [lazyLoad]="environment.baseUrl + prod.ingredient_image" class="courner v-align-center"/>
+                                                                {{prod.ingredient_name | titlecase}}
+                                                            </td>
+                                                            <td>
+                                                                <select class="form-control" [(ngModel)]="prod.threshold_unit" (change)="changeReminder($event, prod)">
+                                                                    <option value="0">Below 0 {{prod.ingredient_unit}}</option>
+                                                                    <option value="5">Below 5 {{prod.ingredient_unit}}</option>
+                                                                    <option value="10">Below 10 {{prod.ingredient_unit}}</option>
+                                                                    <option value="15">Below 15 {{prod.ingredient_unit}}</option>
+                                                                    <option value="20">Below 20 {{prod.ingredient_unit}}</option>
+                                                                </select>
+                                                            </td>
+                                                            <td class="text-danger" (click)="selectIngredient(prod)" data-toggle="modal" data-target="#add" style="cursor: pointer;">Add</td>
+                                                            <td [ngClass]="{'text-danger': (prod?.quantity < prod?.threshold_unit), 'text-success': (prod?.quantity > prod?.threshold_unit)}">{{prod.quantity}} {{prod.ingredient_unit}} <span *ngIf="prod.ingredient_unit == ''">Piece</span></td>
+                                                            
+                                                            <td class="text-center">
+                                                                <label class="checkbox toggle">
+                                                                    <input type="checkbox" [checked]="prod.marked_to_serve == 1" (change)="mark(prod)" /><em></em>
+                                                                </label>
+                                                            </td>
+                                                        </tr>
+                                                        
+                                                        
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="row" *ngIf="products.length <= 0">
+                                                <div class="no-item">
+                                                    No Ingredient Avaiable
+                                                </div>
+                                            </div>
+                                            <!---tab------->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="container">
+        Copyright@2020. All Rights reserved
+    </div>
+</div>
+
+
+
+<div class="modal fade align-middle" id="add">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content">
+        <!-- Modal body -->
+        <div class="modal-body">
+          
+          <form>
+            <p class="font-weight-bold">Add Ingredient Quantity</p>
+           
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group counter">
+                        <!-- <label>Unit </label> -->
+                        <div class="counterfield">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-sm" id="minus-btn"><i class="fa fa-minus"></i></button>
+                                </div>
+                                <input type="number" style="width: 74%!important;" id="qty_input" class="" value="1" min="1">
+                                <div class="input-group-prepend">
+                                    <button class="btn btn-sm" id="plus-btn"><i class="fa fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group" style="margin-top: 4px;">
+                        {{selectedIngredient?.ingredient_unit != '' ? selectedIngredient?.ingredient_unit : 'Piece' }}
+                    </div>
+                </div>
+            </div>
+               
+           
+            
+            
+            <div class="form-group text-center mt-3">
+                <button  data-dismiss="modal" class="wpx-170 btn btn-primary" (click)="setQuantity()">
+                    DONE
+                </button>
+            </div>
+          </form>
+        </div>
+    
+      </div>
+    </div>
+  </div>

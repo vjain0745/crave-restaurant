@@ -1,0 +1,112 @@
+<app-header></app-header>
+<div id="menuPage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <app-left-sidebar></app-left-sidebar>
+    <div class="pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+            <div class="page-body">
+              <div class="row">
+                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                  <span class="mr-3">
+                    Menu
+                  </span>
+                </div>
+                <div class="col-12 col-sm-12 col-md-6 text-right col-lg-6">
+                  <a routerLink="/menu/menu-combo" class="text-primary">
+                    Back
+                  </a>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-3">
+
+                  <div class="card">
+                    <div class="card-body">
+                      <!-----tab----->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <form>
+                            <div class="form-group">
+                              <label>Combo Name</label>
+                              <input type="text" [value]="comboDetails?.combo_name" class="form-control" readonly>
+                            </div>
+
+                            <p class="font-weight-bold">Combo Pricing</p>
+                            
+
+                              <div class="form-group">
+                                <label>Combo Price</label>
+                                <input type="text" [value]="comboDetails?.combo_price" class="form-control" readonly>
+                              </div>
+
+                              <!-- <div class="form-group">
+                                <label>Packaging Charge</label>
+                                <input type="number" placeholder="Enter Price" class="form-control"
+                                  formControlName="packing_charge" (change)="updateFinalPrice($event)">
+                              </div> -->
+
+                              <div class="form-group">
+                                <label>Tax</label>
+                                <input type="text" [value]="comboDetails?.tax_price" class="form-control" readonly>
+                              </div>
+
+                              <div class="form-group">
+                                <label>Final Price</label>
+                               <input type="text" [value]="comboDetails?.final_price" class="form-control" readonly>
+                              </div>
+
+                            <div class="form-group">
+                              <label>Order Limit</label>
+                              <input type="text" [value]="comboDetails?.max_order_limit"  class="form-control" readonly>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="item-box">
+                            <p class="font-weight-bold">Added Dishes In The Combo</p>
+                            <div class="table-responsive">
+                              <table class="w-100 combo-table">
+                                <tr *ngFor="let dish of comboDetails?.dish_list">
+                                  <td style="position: relative;">
+                                    <img style="width: 80px;height: 80px;" [defaultImage]="'assets/images/supplier.png'" width="65px" height="65px" [lazyLoad]="environment.baseUrl + dish?.dish_id?.food_image">
+                                   
+                                  </td>
+                                  <td> {{dish?.dish_id?.food_name}} [x{{dish?.dish_qty}}]</td>
+                                  <td>
+                                    {{dish?.dish_varient?.qty || 'N/A'}}
+                                  </td>
+                                </tr>
+                                <!-- <tr >
+                                  <td style="position: relative;">
+                                    <img style="width: 80px;height: 80px;" src="assets/images/global.png">
+                                   
+                                  </td>
+                                  <td> Daal Makhni [2]</td>
+                                  <td>
+                                    Small Size
+                                  </td>
+                                </tr> -->
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!---tab------->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="container">
+    Copyright@2020. All Rights reserved
+  </div>
+</div>
+

@@ -1,0 +1,80 @@
+<section class="login">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <a href="javascript:void(0)">
+                    <img class="height-60" src="assets/images/logo.png" />
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-md-6 col-lg-6 col-xl-6 text-right">
+                <div class="header-icon">
+                    <a href="javascript:void(0)" class="m-r-30">
+                        <img src="assets/images/notification.png" />
+                    </a>
+
+                    <!-----dropdown----->
+                    <a class="dropdown" style="cursor: pointer;">
+                        <span data-toggle="dropdown">
+                            <img src="assets/images/setting.png" />
+                        </span>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" routerLink="/home/pending-profile">View Profile</a>
+                          <a class="dropdown-item" href="javascript:void(0)">Help</a>
+                            <a class="dropdown-item" href="javascript:void(0)">Contact</a>
+                          <a class="dropdown-item" data-toggle="modal" data-target="#logout">Logout</a>
+                        </div>
+                    </a>
+                    <!-----dropdown----->
+                    <!-- <a (click)="logout()">
+                        <img src="assets/images/setting.png" />
+                    </a> -->
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 col-sm-12 col-md-12">
+                <h5 class="text-center">Complete your profile to start your bussiness</h5>
+            </div>
+        </div>
+            <div class="row mt-5">
+                <div class="offset-md-2 col-12 col-sm-12 col-md-4">
+                    <div routerLink="#" class="item slider-box" routerLink="/home/bussiness-detail">
+                        <button  class="btn btn-light">Pending</button>
+                        <div class="text-center">
+                            <img src="assets/images/business_details_icon.png" />
+                        </div>
+                        <div class="pending-data text-center">
+                            <h6>Business Details</h6>
+                            <p>Provide your TIN & TAX details</p>
+                        </div>
+                        <div class="add-detail text-center">
+                            <a routerLink="/home/bussiness-detail">Add Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-4">
+                    <div class="item slider-box" routerLink="/home/bank-detail" >
+                        <button class="btn btn-light">Pending</button>
+                         <div class="text-center">
+                             <img src="assets/images/bank_details_icon.png" />
+                         </div>
+                         <div class="pending-data text-center">
+                             <h6>Bank Details</h6>
+                             <p>Provide your Bank details <br>to verify account</p>
+                         </div>
+                         <div class="add-detail text-center">
+                             <a routerLink="/home/bank-detail">Add Details</a>
+                         </div>
+                     </div>
+            </div>
+
+            <div class="offset-md-2 col-12 col-sm-12 col-md-8">
+                <a routerLink="/dashboard" class="text-primary font-weight-bold" >All Done, Get Started</a>
+            </div>
+
+
+        </div>
+    </div>
+  </section>
+
+

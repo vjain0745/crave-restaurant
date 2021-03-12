@@ -1,0 +1,481 @@
+<div class="theme-loader" *ngIf="routerChanged">
+  <div class="ball-scale">
+    <div class='contain'>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+    </div>
+  </div>
+</div>
+<app-header></app-header>
+<div id="livePage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <app-left-sidebar></app-left-sidebar>
+    <div class="pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+            <div class="page-body">
+              <!-- <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+                           <label class="switch">
+                           <input type="checkbox">
+                           <span class="slider round"></span>
+                           </label>
+                           Taking Orders
+                        </div>
+                     </div> -->
+              <div class="row gutter-xs">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
+                  <div class="card">
+                    <div class="card-body">
+                      <button style="float: left;margin-right: 10px;position: absolute;top: 7px;" routerLink="/orders/live-orders" class="btn btn-primary btn-sm">
+                        <i class="fa fa-arrow-left"></i>
+                      </button><br/>
+                      <div class="tabs" *ngIf="order?.order_status >= 6">
+                        <div class="tabs-stage">
+                          <div id="tab-1">
+                            <div class="pending-box showing-tabs">
+                              <h6>Order Id <span>#{{order?._id | slice: order?._id.length-8: order?._id.length }}</span>
+                                <b [ngClass]="{'ready-label': order?.order_status == 7, 'delayed-label': order?.order_status != 7}">{{getOrderStatus(order?.order_status)}}</b></h6>
+                              <p>{{order?.created_on | date: 'dd/MM/yyyy HH:mm a'}}</p>
+                              <div class="pending-item-count" *ngFor="let dish of order?.dishes">
+                                <span *ngIf="dish?.varient_id">
+                                  {{dish?.dish_id?.food_name | titlecase}} <span>&times;
+                                    {{dish?.quantity | number}}</span>
+                                  <span
+                                    style="color: #aeaeae;font-size: 12px;">[{{dish?.varient_id?.qty | titlecase}}]</span>
+                                </span>
+                                <span *ngIf="!dish?.varient_id">
+                                  {{dish?.dish_id?.combo_name | titlecase}} <span>&times;
+                                    {{dish?.quantity | number}}</span>
+                                  <span
+                                    style="color: #aeaeae;font-size: 12px;">[combo]</span>
+                                </span>
+                              </div>
+                              <div class="item-flex">
+                                <div class="pending-item-count">
+                                  <!-- Item Noodles <span>&times; 12</span> -->
+                                </div>                                
+                                <div class="pending-item-total">
+                                  Total <span class="text-success"> SAR {{order?.total_amount  | number}}</span>
+                                </div>
+                              </div>
+                              <div class="row adjusting-row">
+                                <div class="col-lg-9 col-md-6 col-sm-6 col-12">
+                                  <div class="order-msg">
+                                    Payment Mode: <span class="text-success"> {{getPaymentMode(order?.payment_mode)}}</span>
+                                  </div>
+                                  <div class="order-msg" *ngIf="order?.cancelation_reason != ''">
+                                    Cancellation Reason: <span class="text-danger"> {{order?.cancelation_reason}}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="tabs" *ngIf="order?.order_status < 6">
+                        <ul class="tabs-nav">
+                          <!-- <li><a href="#tab-1">Pending</a></li>
+                          <li><a href="#tab-2">Packing</a></li>
+                          <li><a href="#tab-3">Ready</a></li>
+                          <li><a href="#tab-4">Ongoing</a></li> -->
+                          <li class="pending-tab"><a class="disabled-tab">Pending</a></li>
+                          <li class="preparing-tab"><a class="disabled-tab">Preparing</a></li>
+                          <li class="ready-tab"><a class="disabled-tab">Ready</a></li>
+                          <li class="ongoing-tab"><a class="disabled-tab">Ongoing</a></li>
+                        </ul>
+                        <div class="tabs-stage">
+                          <div id="tab-1" *ngIf="order?.order_status == 0">
+                            <div class="pending-box showing-tabs">
+                              <h6>Order Id <span>#{{order?._id | slice: order?._id.length-8: order?._id.length }}</span>
+                              </h6>
+                              <p>{{order?.created_on | date: 'dd/MM/yyyy HH:mm a'}}</p>
+                              <div class="pending-item-count" *ngFor="let dish of order?.dishes">
+                                <span *ngIf="dish?.varient_id">
+                                  {{dish?.dish_id?.food_name | titlecase}} <span>&times;
+                                    {{dish?.quantity | number}}</span>
+                                  <span
+                                    style="color: #aeaeae;font-size: 12px;">[{{dish?.varient_id?.qty | titlecase}}]</span>
+                                </span>
+                                <span *ngIf="!dish?.varient_id">
+                                  {{dish?.dish_id?.combo_name | titlecase}} <span>&times;
+                                    {{dish?.quantity | number}}</span>
+                                  <span
+                                    style="color: #aeaeae;font-size: 12px;">[combo]</span>
+                                </span>
+                              </div>
+                              <div class="item-flex">
+                                <div class="pending-item-count">
+                                  <!-- Item Noodles <span>&times; 12</span> -->
+                                </div>
+                                <div class="pending-item-total">
+                                  Total <span class="text-success"> SAR {{order?.total_amount  | number}}</span>
+                                </div>
+                              </div>
+                              <div class="row adjusting-row">
+                                <div class="col-lg-9 col-md-6 col-sm-6 col-12">
+                                  <div class="order-msg">
+                                    Payment Mode: <span class="text-success"> {{getPaymentMode(order?.payment_mode)}}</span>
+                                  </div>
+                                  <div class="order-msg">
+                                    You have a new order!
+                                  </div>
+                                </div>
+                                <div class="col-lg-3 col-md-5 col-sm-6 col-12 text-right">
+                                  <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#accept"
+                                    (click)="selectRejectOrder(order)">Accept</button>
+                                  <button class="btn btn-sm" style="background-color: #e42a4f !important; color: #fff;" data-toggle="modal" data-target="#reason"
+                                    (click)="selectRejectOrder(order)">Reject</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="tab-2" *ngIf="order?.order_status == 1 || order?.order_status == 2 || order?.order_status == 5">
+                            <div class="pending-box showing-tabs">
+                              <h6>Order Id
+                                <span>#{{order?._id | slice: order?._id.length-8: order?._id.length }}</span><b
+                                  class="delayed-label" *ngIf="order?.order_status == 5">Delayed</b></h6>
+                              <!-- <a hred="javascript:void(0);" class="help-link">Help</a> -->
+                              <p>{{order?.created_on | date: 'dd/MM/yyyy HH:mm a'}}</p>
+                              <div class="pending-item-count" *ngFor="let dish of order?.dishes">
+
+                                <span *ngIf="dish?.varient_id">
+                                  {{dish?.dish_id?.food_name | titlecase}} <span>&times;
+                                    {{dish?.quantity | number}}</span>
+                                  <span
+                                    style="color: #aeaeae;font-size: 12px;">[{{dish?.varient_id?.qty | titlecase}}]</span>
+                                </span>
+                                <span *ngIf="!dish?.varient_id">
+                                  {{dish?.dish_id?.combo_name | titlecase}} <span>&times;
+                                    {{dish?.quantity | number}}</span>
+                                  <span
+                                    style="color: #aeaeae;font-size: 12px;">[combo]</span>
+                                </span>
+
+                              </div>
+                              <div class="item-flex">
+                                <div class="pending-item-count">
+                                  <!-- Item Noodles <span>&times; 12</span> -->
+                                </div>
+                                <div class="pending-item-total">
+                                  Total <span class="text-success"> SAR {{order?.total_amount  | number}}</span>
+                                </div>
+                              </div>
+                              <h6 class="delivery-boy">Order prepared in <span><b
+                                    class="delay-min"></b>{{order?.prepration_time}} min</span></h6>
+                              <h6 class="delivery-boy">Delivery boy arrival in <span><b
+                                    class="delay-min"></b>{{order?.prepration_time + 10}} min</span></h6>
+                              <!-- <div class="row adst-5">
+                                <div class="col-lg-7 col-md-7 col-sm-7 col-12">
+                                  <b>Request Instructions</b>
+                                </div>
+                                <div class="col-lg-5 col-md-5 col-sm-5 col-12 text-right">
+                                  Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum
+                                  has been the industry's standard dummy text ever since the 1500s, when an unknown
+                                  printer took a galley of type and scrambled it to make a type specimen book. It has
+                                  survived not only five centuries, but also the leap into electronic typesetting,
+                                  remaining essentially unchanged.
+                                </div>
+                              </div> -->
+                              <div class="row adjusting-row mt-25">
+                                <div class="col-lg-9 col-md-6 col-sm-6 col-12">
+                                  <div class="order-msg">
+                                    Payment Mode: <span class="text-success"> {{getPaymentMode(order?.payment_mode)}}</span>
+                                  </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-right">
+                                  <button class="btn btn-primary btn-sm text-uppercase" (click)="markReady(order)">Mark
+                                    Ready</button>
+                                  <button class="btn btn-primary-o btn-sm text-uppercase" data-toggle="modal"
+                                    data-target="#delay" (click)="selectRejectOrder(order)">Delay Order</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="tab-3" *ngIf="order?.order_status == 3">
+                            <div class="pending-box showing-tabs">
+                              <h6>#{{order?._id | slice: order?._id.length-8: order?._id.length }}<b
+                                  class="ready-label">Ready</b></h6>
+                              <!-- <a hred="javascript:void(0);" class="help-link">Help</a> -->
+                              <p>{{order?.created_on | date: 'dd/MM/yyyy HH:mm a'}}</p>
+                              <div class="pending-item-count" *ngFor="let dish of order?.dishes">
+                                
+                                <span *ngIf="dish?.varient_id">
+                                  {{dish?.dish_id?.food_name | titlecase}} <span>&times;
+                                    {{dish?.quantity | number}}</span>
+                                  <span
+                                    style="color: #aeaeae;font-size: 12px;">[{{dish?.varient_id?.qty | titlecase}}]</span>
+                                </span>
+                                <span *ngIf="!dish?.varient_id">
+                                  {{dish?.dish_id?.combo_name | titlecase}} <span>&times;
+                                    {{dish?.quantity | number}}</span>
+                                  <span
+                                    style="color: #aeaeae;font-size: 12px;">[combo]</span>
+                                </span>
+
+                              </div>
+                              <div class="item-flex">
+                                <div class="pending-item-count">
+                                  <!-- Item Noodles <span>&times; 12</span> -->
+                                </div>
+                                <div class="pending-item-total">
+                                  Total <span class="text-success">SAR {{order?.total_amount  | number}}</span>
+                                </div>
+                              </div>
+                              <h6 class="delivery-boy">Delivery boy arrival in <span>{{order?.prepration_time + 10}}
+                                  min</span></h6>
+                              <div class="row adjusting-row mt-25">
+                                <div class="col-lg-9 col-md-6 col-sm-6 col-12">
+                                  <div class="order-msg">
+                                    Payment Mode: <span class="text-success"> {{getPaymentMode(order?.payment_mode)}}</span>
+                                  </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-right">
+                                  <!-- <button class="btn btn-primary btn-sm text-uppercase">Order Picked</button> -->
+                                  <p class="text-danger">Order Not Picked Yet</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div id="tab-4" *ngIf="[4,7,9,10,11,12].includes(order?.order_status)">
+                            <div class="pending-box showing-tabs">
+                              <h6>Order Id <span>#{{order?._id | slice: order?._id.length-8: order?._id.length }}</span>
+                                <!-- <a hred="javascript:void(0);" class="help-link">Help</a> -->
+                              </h6>
+                              <p>{{order?.created_on | date: 'dd/MM/yyyy HH:mm a'}}</p>
+                              <div class="pending-item-count" *ngFor="let dish of order?.dishes">
+                                
+                                <span *ngIf="dish?.varient_id">
+                                  {{dish?.dish_id?.food_name | titlecase}} <span>&times;
+                                    {{dish?.quantity | number}}</span>
+                                  <span
+                                    style="color: #aeaeae;font-size: 12px;">[{{dish?.varient_id?.qty | titlecase}}]</span>
+                                </span>
+                                <span *ngIf="!dish?.varient_id">
+                                  {{dish?.dish_id?.combo_name | titlecase}} <span>&times;
+                                    {{dish?.quantity | number}}</span>
+                                  <span
+                                    style="color: #aeaeae;font-size: 12px;">[combo]</span>
+                                </span>
+
+                              </div>
+                              <div class="item-flex">
+                                <div class="pending-item-count">
+                                  <!-- Item Noodles <span>&times; 12</span> -->
+                                </div>
+                                <div class="pending-item-total">
+                                  Total <span class="text-success">SAR {{order?.total_amount  | number}}</span>
+                                </div>
+                              </div>
+                              <div class="row adjusting-row mt-25">
+                                <div class="col-lg-9 col-md-6 col-sm-6 col-12">
+                                  <div class="order-msg">
+                                    Payment Mode: <span class="text-success"> {{getPaymentMode(order?.payment_mode)}}</span>
+                                  </div>
+                                </div>
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-right">
+                                  <button class="btn btn-primary btn-sm text-uppercase"
+                                    (click)="openTracking()">Track Order</button>
+                                </div>
+                              </div>
+                              <!-- <h6 class="delivery-boy">Order Picked Up <span>15 min</span></h6> -->
+                              <!-- <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3502.5150462434385!2d77.38453251458792!3d28.61432188242491!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cef2b5cd9a085%3A0xbb9d9da12a501a50!2sFluper%20-%20App%20Development%20Company!5e0!3m2!1sen!2sin!4v1594984072964!5m2!1sen!2sin"
+                                width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen=""
+                                aria-hidden="false" tabindex="0"></iframe> -->
+                              <agm-map *ngIf="trackOrder" [latitude]="lat" [longitude]="long" [zoom]="12"
+                                style="width:100%;height:450px">
+                                <agm-marker [latitude]="lat" [longitude]="long" [title]="'Restaurant'"
+                                  [iconUrl]="'assets/img/dish.png'"></agm-marker>
+                                <agm-marker [latitude]="user_lat" [longitude]="user_long"
+                                  [title]="'User: '+order?.address?.address_title" [iconUrl]="'assets/img/person.png'">
+                                </agm-marker>
+                                <agm-marker [latitude]="driver_lat" [longitude]="driver_long" [title]="'Driver'"
+                                  [iconUrl]="'assets/img/food-delivery.png'"></agm-marker>
+                                <agm-direction *ngIf="trackOrder" [origin]="origin" [destination]="destination">
+                                </agm-direction>
+                              </agm-map>
+
+                              <!-- <div class="order-summary-list">
+                                <ul>
+                                  <li class="done">
+                                    <div class="summ-order">
+                                      <h6>Delivery boy assigned</h6>
+                                    </div>
+                                  </li>
+                                  <li class="done">
+                                    <div class="summ-order">
+                                      <h6>On route to delivery location</h6>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="summ-order">
+                                      <h6>Order Delayed</h6>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="summ-order">
+                                      <h6>Waiting for new delivery boy</h6>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="summ-order">
+                                      <h6>Delivery Boy assigned</h6>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="summ-order">
+                                      <h6>New Delivery Boy assigned</h6>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="summ-order">
+                                      <h6>On route to delivery boy location</h6>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="summ-order">
+                                      <h6>Order pickup from delivery boy</h6>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="summ-order">
+                                      <h6>On route to delivery location</h6>
+                                    </div>
+                                  </li>
+                                  <li>
+                                    <div class="summ-order">
+                                      <h6>Order Delivered</h6>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div> -->
+                              <!-- <div class="row adjusting-row mt-25">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-12 text-right">
+                                  <button class="btn btn-primary btn-sm text-uppercase">Mark As Completed</button>
+                                </div>
+                              </div> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="container">
+    Copyright@2019. All Rights reserved
+  </div>
+</div>
+<div class="modal fade" id="accept">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-time">
+          <h6>How long will it take to prepare and packing?</h6>
+          <div class="counter-box" style="margin: 0 auto;margin-bottom: 10px;">
+            <button (click)="changeTime('dec')">-</button>
+            <p>{{preparingTime}}<span>mins.</span></p>
+            <button (click)="changeTime('inc')">+</button>
+          </div>
+          <div class="w-100 text-center">
+            <button class="btn btn-primary btn-sm" data-dismiss="modal" (click)="acceptOrder()">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="delay">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-time">
+          <h6>How long will it take extra time to prepare and packing?</h6>
+          <div class="counter-box" style="margin: 0 auto;margin-bottom: 10px;">
+            <button (click)="changeExtraTime('dec')">-</button>
+            <p>{{extraTime}}<span>mins.</span></p>
+            <button (click)="changeExtraTime('inc')">+</button>
+          </div>
+          <div class="w-100 text-center">
+            <button class="btn btn-primary btn-sm" data-dismiss="modal" (click)="markDelay()">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="accept-confirm">
+  <div class="modal-dialog modal-sm" data-dismiss="modal">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-confirm">
+          <img src="assets/images/confirm.png" />
+          <p>Order Confirmed Successfully..!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="reason">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="modal-reason">
+          <h6>I'm rejecting this order because.</h6>
+          <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <ul>
+                <li><label><input type="radio" name="reason" [(ngModel)]="cancel_reason"
+                      value="Expected delivery date has changed and the product is arriving at a later date." /><span>Expected
+                      delivery date has changed and the product is arriving at a later date.</span></label></li>
+                <li><label><input type="radio" name="reason" [(ngModel)]="cancel_reason"
+                      value="Product is being delivered to a wrong address" /><span>Product is being delivered to a
+                      wrong address</span></label></li>
+                <li><label><input type="radio" name="reason" [(ngModel)]="cancel_reason"
+                      value="Product is not required anymore." /><span>Product is not required
+                      anymore.</span></label></li>
+              </ul>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+              <ul>
+                <li><label><input type="radio" name="reason" [(ngModel)]="cancel_reason"
+                      value="Cheaper alternative available for lesser price." /><span>Cheaper alternative available
+                      for lesser price.</span></label></li>
+                <li><label><input type="radio" name="reason" [(ngModel)]="cancel_reason"
+                      value="The price of the product has fallen due to sales/discounts" /><span>The price of the
+                      product has fallen due to sales/discounts</span></label></li>
+                <li><label><input type="radio" name="reason" [(ngModel)]="cancel_reason" value="other" /><span>Other
+                      Reason</span></label></li>
+              </ul>
+            </div>
+          </div>
+          <div class="form-group" *ngIf="cancel_reason == 'other'">
+            <textarea class="form-control" [(ngModel)]="custom_cancel_reason"
+              placeholder="Type reason here..."></textarea>
+          </div>
+          <button class="btn btn-primary btn-block btn-md" (click)="rejectOrder()">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

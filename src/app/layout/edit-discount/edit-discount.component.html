@@ -1,0 +1,112 @@
+<app-header></app-header>
+<div id="discountsPage"></div>
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <app-left-sidebar></app-left-sidebar>
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <div class="page-body">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                                    <h6 class="font-weight-bold">
+                                        Edit Offer & Discounts
+                                    </h6>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-6 text-right col-lg-6">
+                                    <a class="text-primary" routerLink="/home/discounts"><i
+                                            class="fa fa-long-arrow-left"></i> Back</a>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                                    <div class="add-discount-page">
+                                                        <form [formGroup]="discountForm">
+                                                            <h6>Edit Offer</h6>
+                                                            <div class="form-group mt-3">
+                                                                <label class="font-14">Edit Offer Banner</label>
+                                                                <div class="form-control height-auto file showName tax">
+                                                                    <input type="file" placeholder="Offer Banner" (change)="uploadFile($event)"
+                                                                        id="file" />
+                                                                    <span *ngIf="offerBanner" class="text-dark"
+                                                                        style="font-weight: 400;"><i
+                                                                            class="ti-image fs-12 ml-1 remove"
+                                                                            style="padding-right: 2px;"></i> 1 file
+                                                                        Uploaded </span>
+                                                                    <span class="text">Upload</span>
+                                                                </div>
+                                                                <p class="help-text">Image dimension should be 545 X 320
+                                                                    pixel.</p>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Edit Title</label>
+                                                                <input type="text" placeholder="Edit Title" formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': isSubmitted && discount.title.errors}"/>
+                                                                <div *ngIf="isSubmitted && discount.title.errors" class="invalid-feedback">
+                                                                    <div *ngIf="isSubmitted && discount.title.errors.required"> Title is required*</div>
+                                                                </div>
+                                                            </div>
+                                                            <h6>Edit Duration</h6>
+                                                            <div class="row">
+                                                                <div class="col-lg-6 col-md-6 col-md-6 col-12">
+                                                                    <div class="form-group">
+                                                                        <label>From</label>
+                                                                        <input type="date" placeholder="mm/dd/yyyy" formControlName="from" [min]="minDate" (change)="sendFromDate()" class="form-control" />
+                                                                        <div *ngIf="isSubmitted && discount.from.errors" class="invalid-feedback">
+                                                                            <div *ngIf="isSubmitted && discount.from.errors.required">From Date is required*</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-lg-6 col-md-6 col-md-6 col-12">
+                                                                    <div class="form-group">
+                                                                        <label>To</label>
+                                                                        <input type="date" placeholder="mm/dd/yyyy" formControlName="to" [min]="maxDate" class="form-control" />
+                                                                        <div *ngIf="isSubmitted && discount.to.errors" class="invalid-feedback">
+                                                                            <div *ngIf="isSubmitted && discount.to.errors.required">To Date is required*</div>
+                                                                          </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Fill Discount<br>(to be given on each and every 
+                                                                    product or product category selected)</label>
+                                                                    <input min='0' type="number" onKeyDown="if(this.value.length==2 && event.keyCode!=8) return false;" 
+                                                                    onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
+                                                                      placeholder="Discount(eg:-10,20,30...)"  formControlName="discount" class="form-control"
+                                                                      [ngClass]="{ 'is-invalid': isSubmitted && discount.discount.errors}" >
+                                                                   <div *ngIf="isSubmitted && discount.discount.errors" class="invalid-feedback">
+                                                                       <div *ngIf="isSubmitted && discount.discount.errors.required">Discount is required*</div>
+                                                                       <div *ngIf="isSubmitted && discount.discount.errors.pattern">Discount not valid*</div>
+                                                                   </div>
+                                                            </div>
+                                                            <button class="btn btn-primary" (click)="submitDiscountForm()">SAVE & SUBMIT FOR
+                                                                APPROVAL</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                                                    <div class="img-box" *ngIf="mySrc">
+                                                        <img class="imagefile" [src]="mySrc" />
+                                                        <button class="close" (click)="closeMe($event)"
+                                                            id="cls">&times;</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="container">
+        Copyright@2020. All Rights reserved
+    </div>
+</div>

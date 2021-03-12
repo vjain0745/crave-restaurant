@@ -1,0 +1,82 @@
+<section class="login">
+  <div class="container">
+      <div class="row">
+          <div class="col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+              <a href="javascript:void(0)">
+                  <img src="assets/images/logo.png" class="logo-height" />
+              </a>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-12 col-sm-12 col-md-6 col-lg-7 col-xl-7 login-left">
+              <div class="login-card">
+                  <h1>Lorem Ipsum <br>Is Dummy Text</h1>
+                  <h6>Sign in or create account to start selling</h6>
+                  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam,</p>
+                  <img src="assets/img/restaurant-img.png">
+                </div>
+          </div>
+          <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-5 login-right">
+              <div class="login-card">
+                  <div class="m-b-30">
+                      <h3>OTP Verification</h3>
+                      <p>Enter 4 digit verification code sent on<br> your registered phone number xxxxxxx{{userData.mobile_number | slice: userData.mobile_number.length-3 : userData.mobile_number.length}}</p>
+                  </div>
+                  <form class="w-100" [formGroup]="resetForm" (ngSubmit)="submit()" autocomplete="off">
+                      <div class="form-group">
+                            <div class="otpField">
+                                <input type="text" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" placeholder="0" maxlength="1" [(ngModel)]="otp1" [ngModelOptions]="{standalone: true}"/>
+                                <input type="text" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" placeholder="0" maxlength="1" [(ngModel)]="otp2" [ngModelOptions]="{standalone: true}"/>
+                                <input type="text" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" placeholder="0" maxlength="1" [(ngModel)]="otp3" [ngModelOptions]="{standalone: true}"/>
+                                <input type="text" onkeypress="return event.charCode >= 48 &amp;&amp; event.charCode <= 57" placeholder="0" maxlength="1" [(ngModel)]="otp4" [ngModelOptions]="{standalone: true}"/>
+                            </div>
+                          <p class="font-weight-bold" (click)="resend()"><span class="text-primary" style="cursor: pointer;">Resend Code</span> In {{subscribeTimer}} Sec</p>
+                      </div>
+                      <div class="form-group">
+                        <label>Enter New Password</label>
+                        <input type="password" minlength="8" formControlName="password" class="form-control password" placeholder="********"/>
+                        <span class="showHidePass"></span>
+                        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                            <div *ngIf="submitted && f.password.errors.required">Password is required.</div>
+                            <div *ngIf="submitted && f.password.errors.minlength">Password must be at least 8 characters.</div>
+                        </div>
+                    </div>
+                      <div class="form-group">
+                        <label>Re-enter New Password</label>
+                        <input type="password" formControlName="confirm_password" class="form-control password" placeholder="********"/>
+                        <span class="showHidePass"></span>
+                        <div *ngIf="submitted && f.confirm_password.errors" class="invalid-feedback">
+                            <div *ngIf="submitted && f.confirm_password.errors.required">Confirm password is required.</div>
+                            <div *ngIf="submitted && f.confirm_password.errors.mustMatch">Password not matched.</div>
+                        </div>
+                    </div>
+                      <!-- <div class="form-group">
+                          <label>Re-enter Your Password</label>
+                          <input type="password" formControlName="password" class="form-control password" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+                          <span class="showHidePass"></span>
+                          <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                              <div *ngIf="f.password.errors.required">Password is required</div>
+                              <div *ngIf="f.password.errors.minlength">Password must be at least 8 characters</div>
+                          </div>
+                      </div> -->
+                      <div class="m-t-25">
+                          <button type="submit" class="btn btn-primary btn-md btn-block">DONE</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<div class="modal fade in align-middle" id="done">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <!-- Modal body -->
+      <div class="modal-body text-center">
+        <img src="assets/images/reset_password_confirm.png" />
+        <h6 class="text-purple mt-3">Your password has been changed successfully!</h6>
+      </div>
+      
+    </div>
+  </div>
+</div>

@@ -1,0 +1,128 @@
+<section class="login">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <a href="javascript:void(0)">
+                  <img src="assets/images/logo.png" class="logo-height" />
+                </a>
+              </div>
+              <div class="col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6">
+                <li class="langues-dropdown pull-right">
+                  <a href="javascript:void(0)">
+                    <span id="langues">
+                      <img src="assets/images/flags/en.jpg">
+                      English
+                    </span>
+                    <i class="ti-angle-down"></i>
+                  </a>
+                  <ul>
+                    <li>
+                      <img src="assets/images/flags/en.jpg"> English
+                    </li>
+                    <li>
+                      <img src="assets/images/flags/ar.jpg"> Arabic
+                    </li>
+                  </ul>
+                </li>
+              </div>
+        </div>
+        <div class="row">
+           
+            <div class="col-12 col-sm-12 col-md-6 col-lg-7 col-xl-7 login-left">
+                <div class="login-card">
+                    <h1>{{template?.panelTitle}} <br>{{template?.panelTemplate}}</h1>
+                    <h6>Sign in or create account to start selling</h6>
+                    <p>{{template?.panelmessage}}</p>
+                    <img [src]="baseurl + template?.upload_template_image">
+                  </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-6 col-lg-5 col-xl-5 login-right">
+                <div class="login-card">
+                    <div class="m-b-30">
+                        <h3>Get started!</h3>
+                        <p>Already have an account? <a routerLink="/signin" class="text-primary">Sign In</a></p>
+                    </div>
+                    <form class="w-100 form-control-bottom" [formGroup]="signupForm" (ngSubmit)="submit()">
+                        <div class="m-t-10">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" onkeypress="return isAlphaKey(event)" (keypress)="utils.restrictSpaceAtFirst($event)" formControlName="full_name" class="form-control name" placeholder="Full Name" [ngClass]="{ 'is-invalid': submitted && f.full_name.errors}"/>
+                                <div *ngIf="submitted && f.full_name.errors" class="invalid-feedback">
+                                    <div *ngIf="submitted && f.full_name.errors.required">Full name is required.</div>
+                                    <div *ngIf="submitted && f.full_name.errors.maxlength">Full name should not more than 35 characters.</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <input type="email" formControlName="email" class="form-control email" placeholder="demo@gmail.com" [ngClass]="{ 'is-invalid': submitted && f.email.errors}"> 
+                                <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                                    <div *ngIf="submitted && f.email.errors.required">Email is required.</div>
+                                    <div *ngIf="submitted && f.email.errors.email">Email is not valid.</div>
+                                </div>
+                            </div>
+                            <div class="login-phone">
+                                <label>Phone Number</label><br>
+                                <input type="text" formControlName="mobile_number" placeholder="Phone Number" [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors}"
+                                    ng2TelInput class="form-control phone login_mobile"
+                                    [ng2TelInputOptions]="{initialCountry: 'sa'}"
+                                    onkeypress="return event.charCode >= 48 &amp; &amp; event.charCode <= 57"
+                                    (countryChange)="onCountryChange($event)" />
+                                <div *ngIf="submitted && f.mobile_number.errors" class="invalid-feedback">
+                                    <div *ngIf="submitted && f.mobile_number.errors.required">Phone number is required.</div>
+                                    <div *ngIf="submitted && f.mobile_number.errors.minlength">Phone number must be at least 5 digits.</div>
+                                    <div *ngIf="submitted && f.mobile_number.errors.maxlength">Phone number must be at smaller than 15 digits.</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Restaurant Name</label>
+                                <input type="text" onkeypress="return isAlphaKey(event)" formControlName="restaurant_name" (keypress)="utils.restrictSpaceAtFirst($event)" class="form-control cutlery" placeholder="Restaurant Name" [ngClass]="{ 'is-invalid': submitted && f.restaurant_name.errors}"/>
+                                <div *ngIf="submitted && f.restaurant_name.errors" class="invalid-feedback">
+                                    <div *ngIf="submitted && f.restaurant_name.errors.required">Restaurant name is required.</div>
+                                    <div *ngIf="submitted && f.restaurant_name.errors.maxlength">Restaurant name should not more than 35 characters.</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Registration Number</label>
+                                <input type="text" class="form-control regnumber" formControlName="restaurant_number" (keypress)="utils.restrictSpaceAtFirst($event)" placeholder="Registration Number" [ngClass]="{ 'is-invalid': submitted && f.restaurant_number.errors}"/>
+                                <div *ngIf="submitted && f.restaurant_number.errors" class="invalid-feedback">
+                                    <div *ngIf="submitted && f.restaurant_number.errors.required">Restaurant number is required.</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Enter New Password</label>
+                                <input type="password" formControlName="password" (keypress)="utils.restrictSpaceAtFirst($event)" class="form-control password" placeholder="********" [ngClass]="{ 'is-invalid': submitted && f.password.errors}"/>
+                                <span class="showHidePass"></span>
+                                <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                                    <div *ngIf="submitted && f.password.errors.required">Password is required.</div>
+                                    <div *ngIf="submitted && f.password.errors.minlength">Password must be at least 8 characters.</div>
+                                    <div *ngIf="submitted && f.password.errors.maxlength">Password must be at smaller than 15 characters.</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Re-enter Your Password</label>
+                                <input type="password" formControlName="confirm_password" class="form-control password" placeholder="********" [ngClass]="{ 'is-invalid': submitted && f.confirm_password.errors}"/>
+                                <span class="showHidePass"></span>
+                                <div *ngIf="submitted && f.confirm_password.errors" class="invalid-feedback">
+                                    <div *ngIf="submitted && f.confirm_password.errors.required">Confirm password is required.</div>
+                                    <div *ngIf="submitted && f.confirm_password.errors.mustMatch">Password not matched.</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="checkbox-fade fade-in-primary">
+                            <label>
+                                <input type="checkbox" id="terms" >
+                                <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                                <span class="text-inverse">
+                                    I agree to the website's <span class="text-primary" style="cursor: pointer;text-decoration: underline;"> Terms & Conditions</span>
+                                </span>
+                            </label>
+                        </div>
+                        <div class="m-t-25">
+                            <button type="submit" class="btn btn-primary btn-md btn-block">SIGN UP</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

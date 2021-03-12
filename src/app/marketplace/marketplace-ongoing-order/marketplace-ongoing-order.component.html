@@ -1,0 +1,101 @@
+<div class="theme-loader" *ngIf="routerChanged">
+    <div class="ball-scale">
+      <div class='contain'>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+      </div>
+    </div>
+  </div>
+
+
+
+ <app-header></app-header>
+<div id="dashboardPage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <div class="full-width pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+
+            <div class="page-body">
+              <div class="row">
+                <div class="col-md-12 full-height">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-md-3">
+                          <ul class="ongoing-list">
+                            <li routerLink="/marketplace/marketplace-ongoing-order"  class="text-purple">Ongoing Orders</li>
+                            <li routerLink="/marketplace/marketplace-cancelled">Cancelled Orders</li>
+                            <li routerLink="/marketplace/marketplace-completed">Completed Orders</li>
+                          </ul>
+                        </div>
+                        <div class="col-md-9">
+                          <div class="ongoing-details">
+                            <div *ngFor="let order of OngoingOrders" class="product-area">
+                              <div class="row">
+                                <div class="col-sm-12 col-md-3 full-height">
+                                  <div class="img-part" data-toggle="modal" data-target="#add">
+                                    <img [src]="order?.supplier_id[0]?.upload_banner_image[0] == null ? 'assets/images/product-1.png' : baseUrl + order?.supplier_id[0]?.upload_banner_image[0]" class="courner v-align-center w-100" />
+                                  </div>
+                                </div>
+                                <div class="col-sm-12 col-md-9 full-height">
+
+                                  <div class="product-text table-responsive">
+                                    <table class="w-100 global-table">
+                                      <tr>
+                                        <td class="text-dark font-weight-bold">{{order?.supplier_id[0]?.first_name}}&nbsp;&nbsp;{{order?.supplier_id[0]?.last_name}} </td>
+                                        <td class="text-purple font-weight-bold text-right">{{order?.final_amount - order?.final_discount | number : '1.2-2'}}</td>
+                                      </tr>
+                                      <tr>
+                                        <td>
+                                          <p class="para">{{order?.supplier_id[0]?.location}}</p>
+                                          <p class="para">{{order?.created_on | date:'medium' }} </p>
+                                        </td>
+                                        <td class="text-right">
+                                          <button [routerLink]="['/marketplace/marketplace-view-ongoing-Order', order._id ]" skipLocationChange class="add-light text-center">
+                                            View Order
+                                          </button> 
+                                        </td>
+                                      </tr>
+                                    </table>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div *ngIf="OngoingOrders?.length == 0">
+                                <div class="row justify-content-center">
+                                    <div class="col-sm-12 text-center p-3 mb-2 bg-light text-dark">
+                                        <h6>No Ongoing Orders {{OngoingOrders}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="container">
+      Copyright@2020. All Rights reserved
+    </div>
+  </div>

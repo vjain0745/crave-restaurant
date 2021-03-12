@@ -1,0 +1,42 @@
+
+.tabs-nav li {
+  float: left;
+  width: 25%;
+}
+.tabs-nav li:first-child a {
+  border-right: 0;
+  border-top-left-radius: 6px;
+}
+.tabs-nav li:last-child a {
+  border-top-right-radius: 6px;
+}
+.tabs-nav>li>a {
+  background: #fff;
+  color: #333;
+  border: 1px solid #e42a4f;
+  display: block;
+      font-weight: 500;
+    padding: 7px 0;
+  text-align: center;
+  text-decoration: none;
+}
+
+.tabs-nav>li.tab-active a {
+  
+  background: #e42a4f;
+  border: 1px solid #e42a4f;
+  color: #fff;
+  cursor: default;
+}
+.tabs-stage {
+  border-radius: 0 0 6px 6px;
+  border-top: 0;
+  clear: both;
+  padding: 24px 0;
+  position: relative;
+  top: -1px;
+}
+.disabled-tab {
+  pointer-events: none;
+  cursor: default;
+}

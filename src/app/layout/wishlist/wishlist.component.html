@@ -1,0 +1,97 @@
+<div class="theme-loader" *ngIf="routerChanged">
+  <div class="ball-scale">
+    <div class='contain'>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+      <div class="ring"><div class="frame"></div></div>
+    </div>
+  </div>
+</div>
+<app-header></app-header>
+<div id="wishlistPage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+
+    <div class="full-width pcoded-content">
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+            <div class="page-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <p class="text-left font-weight-bold">Wishlist</p>
+                </div>
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-12" *ngFor="let sup of suppliers">
+                  <div class="supplier-img">
+                    <img width="485px" height="210px" (click)="openSupplierDetails(sup)" class="clickble"
+                    [defaultImage]="'assets/images/822.gif'"
+                      [lazyLoad]="environment.baseUrl + sup.upload_banner_image[0]" />
+                    <div class="supplier-text">
+                      <span (click)="openSupplierDetails(sup)"
+                        class="pull-left font-weight-bold clickble">{{sup.first_name | titlecase}}
+                        {{sup.last_name | titlecase}}</span>
+                      <span class="pull-right text-primary" (click)="markFavorite(sup)" style="cursor: pointer;">
+                        <i class="fa" [ngClass]="{ 'fa-heart': sup.is_fav == 1, 'fa-heart-o': sup.is_fav == 0}"></i>
+                      </span>
+                      <div class="clearfix"></div>
+                      <!-- <p>{{sup.location}}</p> -->
+
+                      <!-- <span *ngIf="sup.distance" class="pull-left font-14">Distance:
+                        {{sup.distance / 1000 | number}}kms</span> -->
+                      <span class="pull-left star">
+                        <i class="fa" [ngClass]="{ 'fa-star-o' : sup.rating < 1, 'fa-star': sup.rating >= 1 }"></i>
+                        <i class="fa" [ngClass]="{ 'fa-star-o' : sup.rating < 2, 'fa-star': sup.rating >= 2 }"></i>
+                        <i class="fa" [ngClass]="{ 'fa-star-o' : sup.rating < 3, 'fa-star': sup.rating >= 3 }"></i>
+                        <i class="fa" [ngClass]="{ 'fa-star-o' : sup.rating < 4, 'fa-star': sup.rating >= 4 }"></i>
+                        <i class="fa" [ngClass]="{ 'fa-star-o' : sup.rating < 5, 'fa-star': sup.rating >= 5 }"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                
+                <!-- <div class="col-md-4">
+                  <div routerLink="/home/marketplace-store-detail" class="supplier-img">
+                    <img src="assets/images/f200.png" />
+                    <div class="supplier-text">
+                      <span class="pull-left font-weight-bold">Global Traders</span>
+                      <span class="pull-right text-primary"><i class="fa fa-heart"></i></span>
+                      <div class="clearfix"></div>
+                      <p>Sed ut perspiciatis unde omnis iste natus error sitoii
+                        voluptatem acc doloremque laudantium, totam rem aperiam eaque ipsa omnis...</p>
+
+                      <span class="pull-left font-14">Distance: 4kms</span>
+                      <span class="pull-right star">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div> -->
+
+              </div>
+              <div class="row" *ngIf="suppliers.length <= 0">
+                <div class="no-item">
+                    No Product Found
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="container">
+        Copyright@2020. All Rights reserved
+      </div>
+    </div>

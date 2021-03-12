@@ -1,0 +1,392 @@
+<div class="theme-loader" *ngIf="routerChanged">
+    <div class="ball-scale">
+      <div class='contain'>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+        <div class="ring"><div class="frame"></div></div>
+      </div>
+    </div>
+  </div>
+
+    <app-header></app-header>
+<div id="livePage"></div>
+<div class="pcoded-main-container">
+  <div class="pcoded-wrapper">
+    <app-left-sidebar></app-left-sidebar>
+    <div class="pcoded-content">
+
+      
+      <div class="pcoded-inner-content">
+        <div class="main-body">
+          <div class="page-wrapper">
+
+            <div class="page-body">
+
+              <div class="row">
+                <div class="col-12 col-sm-5 col-md-5 col-lg-6">
+                  <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round"></span>
+                  </label>
+                  Taking Orders
+                </div>
+                <div class="col-lg-2 col-md-7 col-sm-7 col-12">
+                  <!-- <div class="form-group">
+                    <select class="form-control">
+                      <option>Choose Branch</option>
+                      <option>option 2</option>
+                      <option>option 3</option>
+                      <option>option 4</option>
+                    </select>
+                  </div> -->
+                </div>
+                <div class="col-lg-2 col-md-7 col-sm-7 col-12">
+                  <!-- <div class="form-group">
+                    <select class="form-control">
+                      <option>Today</option>
+                      <option>option 2</option>
+                      <option>option 3</option>
+                      <option>option 4</option>
+                    </select>
+                  </div> -->
+                </div>
+                <!-- <div class="col-lg-2 col-md-7 col-sm-7 col-12">
+                  <div class="form-group">
+                    <select class="form-control" (change)="filterLiveOrder($event)">
+                      <option value="">All Orders</option>
+                      <option [value]="filter.id" *ngFor="let filter of filterArray">
+                        {{filter.text | titlecase}}
+                      </option>
+                    </select>
+                  </div>
+                </div> -->
+              </div>
+
+              <div class="row gutter-xs">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-12 ">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="tabs">
+                        <ul class="tabs-nav">
+                          <li><a class="tab-active" >Live Orders</a></li>
+                          <li><a  routerLink= "/orders/past-orders">Past Orders</a></li>
+                        </ul>
+                        <div class="tabs-stage">
+                          <div id="tab-1">
+                            <div class="table-responsive">
+                                <table mat-table [dataSource]="dataSource" matSort
+                                class="mat-elevation-z8 w-100 table-bordered" id="live-table">
+                                
+                                <ng-container matColumnDef="OrderID">
+                                  <th mat-header-cell mat-sort-header *matHeaderCellDef class="wpx-40">
+                                      Order ID
+                                  </th>
+                                  <td mat-cell *matCellDef="let element">#{{element._id | slice : element._id.length-8 : element._id.length }} </td>
+                                </ng-container>
+          
+                                <ng-container matColumnDef="Date">
+                                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Date </th>
+                                  <td mat-cell *matCellDef="let element"> {{element.created_on | date}}
+                                  </td>
+                                </ng-container>
+          
+                                <ng-container matColumnDef="Time">
+                                  <th mat-header-cell *matHeaderCellDef> Time </th>
+                                  <td mat-cell *matCellDef="let element">{{element.created_on | date:'HH:mm a'}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="TimeRequired">
+                                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Time Required </th>
+                                  <td mat-cell *matCellDef="let element"> {{element.order_status <= 0 ? '-' : element?.prepration_time+' Minutes'}} </td>
+                                </ng-container>
+          
+                                <ng-container matColumnDef="Price">
+                                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Price </th>
+                                  <td mat-cell *matCellDef="let element">SAR {{element.total_amount  | number}}
+                                  
+                                  </td>
+                                </ng-container>
+
+          
+                                <ng-container matColumnDef="PaymentMode">
+                                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Payment Mode </th>
+                                  <td mat-cell *matCellDef="let element">{{getPaymentMode(element.payment_mode)}}</td>
+                                  </ng-container>
+          
+                                <ng-container matColumnDef="Status">
+                                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Status </th>
+                                  <td mat-cell *matCellDef="let element"
+                                   [ngClass]="{
+                                    'text-secondary': element.order_status == 0, 
+                                    'text-success': [1,2,3,4,7,9,10,11,12].includes(element.order_status),
+                                    'text-danger': [5,6,8].includes(element.order_status)
+                                  }">{{orderStatus(element.order_status)}} </td>
+                                </ng-container>
+          
+          
+          
+          
+                                <ng-container matColumnDef="action">
+                                  <th mat-header-cell *matHeaderCellDef class="wpx-140"> Action </th>
+                                  <td mat-cell *matCellDef="let element">
+                                    <ng-container class="d-flex">
+                                        <button style="border-radius: 3px;" [routerLink]="['/orders/live-order-view', {id: element._id}]"
+                                        class="btn btn-sm btn-success">View</button>
+                                      <button style="border-radius: 3px;" data-toggle="modal" data-target="#cancel"
+                                        (click)="selectRejectOrder(element)" class="btn btn-sm btn-danger">Cancel
+                                      </button>
+                                    </ng-container>
+                                  </td>
+                                </ng-container>
+          
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                              </table>
+                              <mat-paginator  [length]="length" [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="pageSize" [pageIndex]="0"></mat-paginator>
+
+
+                              <!-- <table class="table table-borderless" id="live-table">
+                                <thead>
+                                  <tr>
+                                    <th>Order ID</th>
+                                    <th>Date</th>
+                                    <th>Time</th>
+                                    <th>Time Required</th>
+                                    <th>Price</th>
+                                    <th>Payment Mode</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let order of orderList">
+                                    <td>#{{order._id | slice : order._id.length-8 : order._id.length }}</td>
+                                    <td>{{order.created_on | date}}</td>
+                                    <td>{{order.created_on | date:'HH:mm a'}}</td>
+                                    <td>{{order.order_status <= 0 ? '-' : order?.prepration_time+' Minutes'}}</td>
+                                    <td>SAR {{order.total_amount  | number}}</td>
+                                    <td>{{getPaymentMode(order.payment_mode)}}</td>
+                                    <td [ngClass]="{
+                                          'text-secondary': order.order_status == 0, 
+                                          'text-success': [1,2,3,4,7,9,10,11,12].includes(order.order_status),
+                                          'text-danger': [5,6,8].includes(order.order_status)
+                                        }">{{orderStatus(order.order_status)}}</td>
+                                    <td>
+                                      <button style="border-radius: 3px;" [routerLink]="['/home/live-order-view', {id: order._id}]"
+                                        class="btn btn-sm btn-success">View</button>
+                                      <button style="border-radius: 3px;" data-toggle="modal" data-target="#cancel"
+                                        (click)="selectRejectOrder(order)" class="btn btn-sm btn-danger">Cancel
+                                      </button>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table> -->
+                              <div class="no-item" *ngIf="orderList.length <= 0">
+                                No Order Found
+                              </div>
+                            </div>
+                          </div>
+                         
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="container">
+        Copyright@2019. All Rights reserved
+      </div>
+    </div>
+    <div class="modal fade" id="cancel">
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="modal-delete">
+              <p>Are you sure you want to cancel this order?</p>
+              <div class="w-100 text-center">
+                <button class="btn btn-primary btn-sm" data-dismiss="modal" data-toggle="modal"
+                  data-target="#reason">Yes</button>
+                <button class="btn btn-primary-o btn-sm" data-dismiss="modal">No</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="reason">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="modal-reason">
+              <h6>I'm rejecting this order because.</h6>
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                  <ul>
+                    <li><label><input type="radio" name="reason" [(ngModel)]="cancel_reason"
+                          value="Expected delivery date has changed and the product is arriving at a later date." /><span>Expected
+                          delivery date has changed and the product is arriving at a later date.</span></label></li>
+                    <li><label><input type="radio" name="reason" [(ngModel)]="cancel_reason"
+                          value="Product is being delivered to a wrong address" /><span>Product is being delivered to a
+                          wrong address</span></label></li>
+                    <li><label><input type="radio" name="reason" [(ngModel)]="cancel_reason"
+                          value="Product is not required anymore." /><span>Product is not required
+                          anymore.</span></label></li>
+                  </ul>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+                  <ul>
+                    <li><label><input type="radio" name="reason" [(ngModel)]="cancel_reason"
+                          value="Cheaper alternative available for lesser price." /><span>Cheaper alternative available
+                          for lesser price.</span></label></li>
+                    <li><label><input type="radio" name="reason" [(ngModel)]="cancel_reason"
+                          value="The price of the product has fallen due to sales/discounts" /><span>The price of the
+                          product has fallen due to sales/discounts</span></label></li>
+                    <li><label><input type="radio" name="reason" [(ngModel)]="cancel_reason" value="other" /><span>Other
+                          Reason</span></label></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="form-group" *ngIf="cancel_reason == 'other'">
+                <textarea class="form-control" [(ngModel)]="custom_cancel_reason"
+                  placeholder="Type reason here..."></textarea>
+              </div>
+              <button class="btn btn-primary btn-block btn-md" (click)="rejectOrder()">Submit</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="view">
+      <div class="modal-dialog modal-md">
+        <div class="modal-content">
+          <div class="modal-body">
+            <button class="close" data-dismiss="modal">&times;</button>
+            <div class="post-order-modal">
+              <h6>Order ID 23243</h6>
+              <p>10:00 AM 18 Feb 2020<span>Scheduled on 10:00 AM 18 Feb 2020</span></p>
+              <div class="table-responsive">
+                <table class="table table-borderless" id="">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="post-order-box">
+                          <img src="assets/images/image01.png" /> Order name <span
+                            class="text-danger">&times;<b>2</b></span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="post-modal-orice text-danger">
+                          $465
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="post-order-box">
+                          <img src="assets/images/image01.png" /> Order name <span
+                            class="text-danger">&times;<b>2</b></span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="post-modal-orice text-danger">
+                          $465
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        Total Price
+                      </td>
+                      <td>
+                        <div class="text-danger">
+                          $465
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-borderless">
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="post-modal-orice">
+                          Delivery Boy
+                        </div>
+                      </td>
+                      <td>
+                        <div class="post-order-box-2 text-right">
+                          Ashish Saxena <img src="assets/images/image01.png" />
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="font-300">
+                          Status
+                        </div>
+                      </td>
+                      <td>
+                        <div class="text-success text-right">
+                          Completed
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="font-300">
+                          Rating
+                        </div>
+                      </td>
+                      <td>
+                        <div class="dash-rating">
+                          <ul class="inactive-rating">
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                          </ul>
+                          <ul class="active-rating" style="width: 68%">
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="font-300">
+                        Profit from this order
+                      </td>
+                      <td>
+                        <div class="text-danger text-right">
+                          $20
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
